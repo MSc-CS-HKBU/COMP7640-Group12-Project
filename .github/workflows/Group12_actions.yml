@@ -1,6 +1,6 @@
 name: Group12 Workflow
 
-    on: [push]
+on: [push]
 
     jobs:
       build:
