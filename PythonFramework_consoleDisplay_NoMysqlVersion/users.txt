@@ -1,6 +1,7 @@
-user[0]
---firstName martin
---lastName coalski
---email mc@gmail.com
---password martinc
+user[1]
+--firstName Roson
+--lastName lau
+--email 21440557@life.hkbu.edu.hk
+--password 123456 
 ----------------------------------------
+

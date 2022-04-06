@@ -7,27 +7,27 @@ products = [
 	{
 		"id": 0,
 		"name": "N95 Mask",
-		"price": '50',
+		"price": 50,
 	},
 	{
 		"id": 1,
 		"name": "KN95 Mask",
-		"price": '25',
+		"price": 25,
 	},
 	{
 		"id": 2,
 		"name": "gloves",
-		"price": '15',
+		"price": 15,
 	},
 	{
 		"id": 3,
 		"name": "Ethanol",
-		"price": '100',
+		"price": 100,
 	},
 	{
 		"id": 4,
 		"name": "panadol",
-		"price": '90',
+		"price": 90,
 	},
 ]
 
