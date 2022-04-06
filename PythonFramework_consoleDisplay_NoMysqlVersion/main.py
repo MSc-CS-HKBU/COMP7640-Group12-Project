@@ -35,12 +35,12 @@ products = [
 def showLandingPage():
 	while True:
 		# AUTHENTICATION
-		authFile = open("./authentication.txt", "r")
+		authFile = open("PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt", "r")
 		authFileLines = authFile.readlines()
 		isLoggedIn = authFileLines[0].split(" ")[1].startswith("T")
 
 		# CART 
-		cartFileReadAndUpdate = open("./cart.txt", "r+")
+		cartFileReadAndUpdate = open("PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
 
 		productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
 
@@ -173,7 +173,7 @@ def showAddProductPanel():
 		if option == "0":
 			shutdown()
 		if int(option) > 0 and int(option) <= len(products):
-			cartFileReadAndUpdate = open("./cart.txt", "r+")
+			cartFileReadAndUpdate = open("PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
 			cartFileLines = cartFileReadAndUpdate.readlines()
 			cartFileLines.insert(0, f'{products[int(option) - 1]["name"]}\n')
 			cartFileReadAndUpdate.seek(0)
@@ -191,7 +191,7 @@ def showAddProductPanel():
 
 def showRemoveProductPanel():
 	while True:
-		cartFileReadAndUpdate = open("./cart.txt", "r+")
+		cartFileReadAndUpdate = open("PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
 		cartFileLines = cartFileReadAndUpdate.readlines()
 		cartFileLinesLength = len(cartFileLines)
 
@@ -207,7 +207,7 @@ def showRemoveProductPanel():
 		option = input("Enter specific character to select option >> ")
 		if int(option) > 0 and int(option) <= cartFileLinesLength:
 			cartFileLinesUpdated = cartFileLines[:int(option) - 1] + cartFileLines[int(option):]
-			cartFileWrite = open("./cart.txt", "w")
+			cartFileWrite = open("PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "w")
 			cartFileWrite.writelines(cartFileLinesUpdated)
 			cartFileWrite.close()
 
@@ -230,7 +230,7 @@ def showRemoveProductPanel():
 # ---<CART>---
 def checkTotalAmountOfProductsInCart():
 	totalAmount = 0
-	cartFileRead = open("./cart.txt", "r")
+	cartFileRead = open("PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r")
 	cartFileLines = cartFileRead.readlines()
 	for line in cartFileLines:
 		line = line.rstrip()
@@ -240,7 +240,7 @@ def checkTotalAmountOfProductsInCart():
 
 def showCart():
 	while True:
-		cartFileReadAndUpdate = open("./cart.txt", "r+")
+		cartFileReadAndUpdate = open("PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
 		cartFileLines = cartFileReadAndUpdate.readlines()
 		cartFileLinesLength = len(cartFileLines)
 
@@ -299,7 +299,7 @@ def showOrderPanel(redirectedFrom):
 		option = input("Your choice >> ")
 		if option == "1":
 			# CLEAN CART
-			cartFileWrite = open("./cart.txt", "w")
+			cartFileWrite = open("PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "w")
 			cartFileWrite.writelines("")
 			cartFileWrite.close()
 
@@ -327,7 +327,7 @@ def showOrderPanel(redirectedFrom):
 # ---<AUTHENTICATION>---
 def showSignUpPanel():
 	
-	usersFileReadAndUpdate = open("./users.txt", "r+")
+	usersFileReadAndUpdate = open("PythonFramework_consoleDisplay_NoMysqlVersion/users.txt", "r+")
 	usersFileLines = usersFileReadAndUpdate.readlines()
 
 	firstName = str()
@@ -448,7 +448,7 @@ def showLoginPanel():
 				# finding email in database (in users.txt)
 				emailFound = False
 
-				usersFileRead = open("./users.txt", "r")
+				usersFileRead = open("PythonFramework_consoleDisplay_NoMysqlVersion/users.txt", "r")
 				usersFileLines = usersFileRead.readlines()
 				for j in range(len(usersFileLines)):
 					if usersFileLines[j].startswith("--email"):
@@ -483,7 +483,7 @@ def showLoginPanel():
 						break
 
 			# SAVE DATA ABOUT USER AFTER USER LOG IN
-			usersFileRead = open("users.txt", "r")
+			usersFileRead = open("PythonFramework_consoleDisplay_NoMysqlVersion/users.txt", "r")
 			usersFileLines = usersFileRead.readlines()
 
 			USER_FIRST_NAME = usersFileLines[userLineIndexInUsersFile + 1].rstrip().split(" ")[1]
@@ -492,7 +492,7 @@ def showLoginPanel():
 			USER_PASSWORD = usersFileLines[userLineIndexInUsersFile + 4].rstrip().split(" ")[1]
 
 			# CHANGE STATUS IN AUTH FILE
-			authFileWrite = open("./authentication.txt", "w")
+			authFileWrite = open("PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt", "w")
 			authFileWrite.write(f"isLoggedIn True\n--firstName {USER_FIRST_NAME}\n--lastName {USER_LAST_NAME}\n--email {USER_EMAIL}\n--password {USER_PASSWORD}\n")
 			authFileWrite.close()
 
@@ -515,7 +515,7 @@ def showLogoutPanel():
 
 		option = input("Your choice >> ")
 		if option == "1": 
-			authFileWrite = open("authentication.txt", "r+")
+			authFileWrite = open("PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt", "r+")
 			authFileWrite.write("isLoggedIn False")
 			authFileWrite.close()
 
