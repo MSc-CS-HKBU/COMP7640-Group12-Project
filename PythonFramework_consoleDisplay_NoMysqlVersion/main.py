@@ -1,4 +1,6 @@
 import pymysql
+import Item_management
+import Item_search
 
 USER_FIRST_NAME = str()
 USER_LAST_NAME = str()
@@ -77,6 +79,10 @@ def showLandingPage():
 
         print("s. Shops")
 
+        print("i. show Items")
+        print("5. insert new Item")
+        print("6. search Items")
+
         print("1. Products")
 
         if productsInCartQuantity == 0:
@@ -139,6 +145,15 @@ def showLandingPage():
             shutdown()
         elif option == "s":
             showShops()
+        elif option == "i":   # show all items
+            Item_management.get_all_items(sqlConnect, cursor)
+            showLandingPage()
+        elif option == "5":   # insert new item
+            Item_management.insert_item(sqlConnect, cursor)
+            showLandingPage()
+        elif option == "6":   # search items
+            Item_search.search_item(sqlConnect, cursor)
+            showLandingPage()
         else:
             print("\n[!] You've entered invalid character.")
             continue
