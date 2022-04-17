@@ -1,0 +1,5 @@
+isLoggedIn True
+--firstName Roson
+--lastName lau
+--email 21440557@life.hkbu.edu.hk
+--password 123456
