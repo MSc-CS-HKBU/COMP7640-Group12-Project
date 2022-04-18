@@ -1,5 +1,8 @@
 import pymysql
 
+import Item_management
+import Item_search
+
 USER_FIRST_NAME = str()
 USER_LAST_NAME = str()
 USER_EMAIL = str()
@@ -56,13 +59,13 @@ def showLandingPage():
     while True:
         # AUTHENTICATION
         authFile = open(
-            "PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt", "r")
+            r"../PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt", "r")
         authFileLines = authFile.readlines()
         isLoggedIn = authFileLines[0].split(" ")[1].startswith("T")
 
         # CART
         cartFileReadAndUpdate = open(
-            "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+            r"../PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
 
         productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
 
@@ -76,6 +79,10 @@ def showLandingPage():
         print("Select option.")
 
         print("s. Shops")
+
+        print("i. show Items")
+        print("5. insert new Item")
+        print("6. search Items")
 
         print("1. Products")
 
@@ -139,6 +146,15 @@ def showLandingPage():
             shutdown()
         elif option == "s":
             showShops()
+        elif option == "i":   # show all items
+            Item_management.get_all_items(sqlConnect, cursor)
+            showLandingPage()
+        elif option == "5":   # insert new item
+            Item_management.insert_item(sqlConnect, cursor)
+            showLandingPage()
+        elif option == "6":   # search items
+            Item_search.search_item(sqlConnect, cursor)
+            showLandingPage()
         else:
             print("\n[!] You've entered invalid character.")
             continue
@@ -157,6 +173,7 @@ def shutdown():
 
 # ---<SHOPS>---
 
+
 def showShops():
     sql = 'SELECT Shop_Name, Shop_Address, Rating FROM shop'
     cursor.execute(sql)
@@ -167,9 +184,6 @@ def showShops():
         rating = row[2]
 
         print(f'|<>| {sname} ({rating}/10) - {saddr}')
-
-
-
 
 
 # ---</SHOPS>---
