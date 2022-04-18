@@ -1,2 +1,4 @@
+0:N95 Mask
+4:panadol
 Ethanol
 gloves

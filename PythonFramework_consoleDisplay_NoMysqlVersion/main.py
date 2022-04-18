@@ -230,7 +230,7 @@ def showAddProductPanel():
             cartFileReadAndUpdate = open(
                 path_cartFile, "r+")
             cartFileLines = cartFileReadAndUpdate.readlines()
-            cartFileLines.insert(0, f'{products[int(option) - 1]["name"]}\n')
+            cartFileLines.insert(0, f'{products[int(option) - 1]["id"]}:{products[int(option) - 1]["name"]}\n')
             cartFileReadAndUpdate.seek(0)
             cartFileReadAndUpdate.writelines(cartFileLines)
             cartFileReadAndUpdate.close()
@@ -321,7 +321,15 @@ def showCart():
         if cartFileLinesLength != 0:
             print("<>---ProductsInCart---<>")
             for i in range(cartFileLinesLength):
-                print(f'<> {cartFileLines[i].rstrip()}')
+                cart_item = cartFileLines[i].rstrip()
+                if ":" not in cart_item:
+                    # original ver of cart file
+                    pass
+                else:
+                    # version 2 of cart file
+                    item_id = cart_item.split(":")[0]
+                    cart_item = cart_item.split(":")[1]                    
+                print(f'<> {cart_item}')
             print(f"<>---TotalAmount >> {checkTotalAmountOfProductsInCart()}$")
 
         option = input("Your choice >> ")
@@ -342,6 +350,8 @@ def showCart():
 
 def checkProductPrice(productName):
     for product in products:
+        if ":" in productName: # coz productName can be in original version or version 2
+            productName = productName.split(":")[1]
         if product["name"] == productName:
             return product["price"]
 # ---</CART>---
