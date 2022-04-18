@@ -51,7 +51,7 @@ def connetSql(databaseName):
     return cursor, sqlConnect
 
 
-cursor, sqlConnect = connetSql('7640_proj')
+cursor, sqlConnect = connetSql('db_bak')
 
 # ---</MAINPAGE>---
 

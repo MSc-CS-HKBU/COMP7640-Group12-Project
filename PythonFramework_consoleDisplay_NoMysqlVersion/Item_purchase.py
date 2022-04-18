@@ -5,6 +5,7 @@ import pymysql
 
 # purchase items
 def purchase_item(db, cursor):
+    # in progress
     option = input("Please enter what you want to search >> ")
     sql = "SELECT Item_Name,Price,Item_qty,Description,Keyword1,Keyword2 FROM items WHERE Item_Name = '%s' OR \
     Keyword1 = '%s' OR Keyword2='%s'"%(option,option,option)
