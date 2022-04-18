@@ -55,18 +55,21 @@ cursor, sqlConnect = connetSql('7640_proj')
 
 # ---</MAINPAGE>---
 
+path_authFile = r"../PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt"
+path_cartFile = r"../PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
+
 
 def showLandingPage():
     while True:
         # AUTHENTICATION
         authFile = open(
-            r"../PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt", "r")
+            path_authFile, "r")
         authFileLines = authFile.readlines()
         isLoggedIn = authFileLines[0].split(" ")[1].startswith("T")
 
         # CART
         cartFileReadAndUpdate = open(
-            r"../PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+            path_cartFile, "r+")
 
         productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
 
@@ -225,7 +228,7 @@ def showAddProductPanel():
             shutdown()
         if int(option) > 0 and int(option) <= len(products):
             cartFileReadAndUpdate = open(
-                "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+                path_cartFile, "r+")
             cartFileLines = cartFileReadAndUpdate.readlines()
             cartFileLines.insert(0, f'{products[int(option) - 1]["name"]}\n')
             cartFileReadAndUpdate.seek(0)
@@ -245,7 +248,7 @@ def showAddProductPanel():
 def showRemoveProductPanel():
     while True:
         cartFileReadAndUpdate = open(
-            "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+            path_cartFile, "r+")
         cartFileLines = cartFileReadAndUpdate.readlines()
         cartFileLinesLength = len(cartFileLines)
 
@@ -263,7 +266,7 @@ def showRemoveProductPanel():
             cartFileLinesUpdated = cartFileLines[:int(
                 option) - 1] + cartFileLines[int(option):]
             cartFileWrite = open(
-                "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "w")
+                path_cartFile, "w")
             cartFileWrite.writelines(cartFileLinesUpdated)
             cartFileWrite.close()
 
@@ -287,7 +290,7 @@ def showRemoveProductPanel():
 def checkTotalAmountOfProductsInCart():
     totalAmount = 0
     cartFileRead = open(
-        "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r")
+        path_cartFile, "r")
     cartFileLines = cartFileRead.readlines()
     for line in cartFileLines:
         line = line.rstrip()
@@ -299,7 +302,7 @@ def checkTotalAmountOfProductsInCart():
 def showCart():
     while True:
         cartFileReadAndUpdate = open(
-            "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+            path_cartFile, "r+")
         cartFileLines = cartFileReadAndUpdate.readlines()
         cartFileLinesLength = len(cartFileLines)
 
@@ -360,7 +363,7 @@ def showOrderPanel(redirectedFrom):
         if option == "1":
             # CLEAN CART
             cartFileWrite = open(
-                "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "w")
+                path_cartFile, "w")
             cartFileWrite.writelines("")
             cartFileWrite.close()
 
