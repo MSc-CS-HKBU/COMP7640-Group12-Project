@@ -2,6 +2,7 @@ import pymysql
 
 import Item_management
 import Item_search
+import Shop_management
 
 USER_FIRST_NAME = str()
 USER_LAST_NAME = str()
@@ -79,6 +80,7 @@ def showLandingPage():
         print("Select option.")
 
         print("s. Shops")
+        print("a. add shop")
 
         print("i. show Items")
         print("5. insert new Item")
@@ -145,7 +147,12 @@ def showLandingPage():
         elif option == "0":
             shutdown()
         elif option == "s":
-            showShops()
+            Shop_management.showShops(sqlConnect, cursor)
+        elif option == "a":
+            print("\n----Please enter info of shop for shop adding----")
+            name = input("Enter shop name >> ")
+            addr = input("Enter shop address >> ")
+            Shop_management.insert_shop(name, addr, 0, sqlConnect, cursor)            
         elif option == "i":   # show all items
             Item_management.get_all_items(sqlConnect, cursor)
             showLandingPage()
@@ -171,22 +178,6 @@ def shutdown():
     exit()
 # ---</EXIT>---
 
-# ---<SHOPS>---
-
-
-def showShops():
-    sql = 'SELECT Shop_Name, Shop_Address, Rating FROM shop'
-    cursor.execute(sql)
-    results = cursor.fetchall()
-    for row in results:
-        sname = row[0]
-        saddr = row[1]
-        rating = row[2]
-
-        print(f'|<>| {sname} ({rating}/10) - {saddr}')
-
-
-# ---</SHOPS>---
 
 # ---<PRODUCTS>---
 
