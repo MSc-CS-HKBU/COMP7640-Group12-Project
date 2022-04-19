@@ -12,5 +12,5 @@ def connetSql(databaseName):
     conn = sqlConnect.cursor()  # Create an operational cursor
     return conn, sqlConnect
 
-database_name = '7640_proj2'
+database_name = '7640_proj'
 conn, sqlConnect = connetSql(database_name)
