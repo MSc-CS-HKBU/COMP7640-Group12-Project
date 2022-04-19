@@ -35,7 +35,7 @@ def cancel_item(db, cursor):
 
 # cancel entire order
 def cancel_order(db, cursor, user_id):
-    # finish
+    # still need a little optimize after purchase function finish
     option = input("Are you sure to cancel the entire order?(y/n)")
     if option == "y":
         sql = "DELETE FROM orders WHERE Customer_ID = %s"%user_id
