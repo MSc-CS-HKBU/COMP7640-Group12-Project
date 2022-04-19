@@ -3,6 +3,7 @@ import pymysql
 import Item_management
 import Item_search
 import Shop_management
+import Item_purchase
 
 USER_FIRST_NAME = str()
 USER_LAST_NAME = str()
@@ -11,29 +12,29 @@ USER_PASSWORD = str()
 
 products = [
     {
-        "id": 0,
-        "name": "N95 Mask",
-                "price": 50,
+        "id": "P001",
+        "name": "Nin Jiom",
+        "price": 27,
     },
     {
-        "id": 1,
-        "name": "KN95 Mask",
-                "price": 25,
+        "id": "P002",
+        "name": "Yiannings Pills 144PC",
+        "price": 568,
     },
     {
-        "id": 2,
-        "name": "gloves",
-                "price": 15,
+        "id": "P003",
+        "name": "Panadol Extra Advance 50pcs",
+        "price": 109,
     },
     {
-        "id": 3,
-        "name": "Ethanol",
-                "price": 100,
+        "id": "P004",
+        "name": "Progesic Tab 500mg 20pcs",
+        "price": 30,
     },
     {
-        "id": 4,
-        "name": "panadol",
-                "price": 90,
+        "id": "P005",
+        "name": "Kobayashi antipyretic patch",
+        "price": 20,
     },
 ]
 
@@ -51,7 +52,7 @@ def connetSql(databaseName):
     return cursor, sqlConnect
 
 
-cursor, sqlConnect = connetSql('db_bak')
+cursor, sqlConnect = connetSql('7640_proj')
 
 # ---</MAINPAGE>---
 
@@ -82,6 +83,7 @@ def showLandingPage():
             print("Welcome!")
         print("Select option.")
 
+        print("p. Purchase cart items")
         print("s. Shops")
         print("a. add shop")
 
@@ -149,13 +151,16 @@ def showLandingPage():
             return
         elif option == "0":
             shutdown()
+        elif option == "p":
+            # Shop_management.showShops(sqlConnect, cursor)  
+            Item_purchase.purchase_item_in_cart(sqlConnect, cursor)       
         elif option == "s":
             Shop_management.showShops(sqlConnect, cursor)
         elif option == "a":
             print("\n----Please enter info of shop for shop adding----")
             name = input("Enter shop name >> ")
             addr = input("Enter shop address >> ")
-            Shop_management.insert_shop(name, addr, 0, sqlConnect, cursor)            
+            Shop_management.insert_shop(name, addr, 0, sqlConnect, cursor)
         elif option == "i":   # show all items
             Item_management.get_all_items(sqlConnect, cursor)
             showLandingPage()
@@ -230,7 +235,9 @@ def showAddProductPanel():
             cartFileReadAndUpdate = open(
                 path_cartFile, "r+")
             cartFileLines = cartFileReadAndUpdate.readlines()
-            cartFileLines.insert(0, f'{products[int(option) - 1]["id"]}:{products[int(option) - 1]["name"]}\n')
+            target_product = products[int(option) - 1]
+            cartFileLines.insert(
+                0, f'{target_product["id"]}:{target_product["name"]}:{target_product["price"]}\n')
             cartFileReadAndUpdate.seek(0)
             cartFileReadAndUpdate.writelines(cartFileLines)
             cartFileReadAndUpdate.close()
@@ -324,11 +331,14 @@ def showCart():
                 cart_item = cartFileLines[i].rstrip()
                 if ":" not in cart_item:
                     # original ver of cart file
+                    # not use
                     pass
                 else:
                     # version 2 of cart file
-                    item_id = cart_item.split(":")[0]
-                    cart_item = cart_item.split(":")[1]                    
+                    splitted = cart_item.split(":")
+                    item_id = splitted[0]
+                    cart_item = splitted[1]
+                    item_price = splitted[1]
                 print(f'<> {cart_item}')
             print(f"<>---TotalAmount >> {checkTotalAmountOfProductsInCart()}$")
 
@@ -350,10 +360,12 @@ def showCart():
 
 def checkProductPrice(productName):
     for product in products:
-        if ":" in productName: # coz productName can be in original version or version 2
+        if ":" in productName:  # coz productName can be in original version (not use) or version 2
             productName = productName.split(":")[1]
         if product["name"] == productName:
             return product["price"]
+        else:
+            return 0
 # ---</CART>---
 
 
