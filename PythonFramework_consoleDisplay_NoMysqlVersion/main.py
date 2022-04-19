@@ -1,6 +1,9 @@
 import pymysql
+
 import Item_management
 import Item_search
+import Shop_management
+import Item_canceling
 
 USER_FIRST_NAME = str()
 USER_LAST_NAME = str()
@@ -53,18 +56,21 @@ cursor, sqlConnect = connetSql('7640_proj')
 
 # ---</MAINPAGE>---
 
+path_authFile = r"../PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt"
+path_cartFile = r"../PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
+
 
 def showLandingPage():
     while True:
         # AUTHENTICATION
         authFile = open(
-            r"../PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt", "r")
+            path_authFile, "r")
         authFileLines = authFile.readlines()
         isLoggedIn = authFileLines[0].split(" ")[1].startswith("T")
 
         # CART
         cartFileReadAndUpdate = open(
-            r"../PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+            path_cartFile, "r+")
 
         productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
 
@@ -78,8 +84,9 @@ def showLandingPage():
         print("Select option.")
 
         print("s. Shops")
+        print("a. add shop")
 
-        print("i. show Items")
+        print("i. show Items in a shop")
         print("5. insert new Item")
         print("6. search Items")
 
@@ -144,9 +151,14 @@ def showLandingPage():
         elif option == "0":
             shutdown()
         elif option == "s":
-            showShops()
-        elif option == "i":   # show all items
-            Item_management.get_all_items(sqlConnect, cursor)
+            Shop_management.showShops(sqlConnect, cursor)
+        elif option == "a":
+            print("\n----Please enter info of shop for shop adding----")
+            name = input("Enter shop name >> ")
+            addr = input("Enter shop address >> ")
+            Shop_management.insert_shop(name, addr, 0, sqlConnect, cursor)            
+        elif option == "i":   # get all items in a shop
+            Item_management.get_items_in_a_shop(sqlConnect, cursor)
             showLandingPage()
         elif option == "5":   # insert new item
             Item_management.insert_item(sqlConnect, cursor)
@@ -170,24 +182,6 @@ def shutdown():
     exit()
 # ---</EXIT>---
 
-# ---<SHOPS>---
-
-def showShops():
-    sql = 'SELECT Shop_Name, Shop_Address, Rating FROM shop'
-    cursor.execute(sql)
-    results = cursor.fetchall()
-    for row in results:
-        sname = row[0]
-        saddr = row[1]
-        rating = row[2]
-
-        print(f'|<>| {sname} ({rating}/10) - {saddr}')
-
-
-
-
-
-# ---</SHOPS>---
 
 # ---<PRODUCTS>---
 
@@ -235,9 +229,9 @@ def showAddProductPanel():
             shutdown()
         if int(option) > 0 and int(option) <= len(products):
             cartFileReadAndUpdate = open(
-                "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+                path_cartFile, "r+")
             cartFileLines = cartFileReadAndUpdate.readlines()
-            cartFileLines.insert(0, f'{products[int(option) - 1]["name"]}\n')
+            cartFileLines.insert(0, f'{products[int(option) - 1]["id"]}:{products[int(option) - 1]["name"]}\n')
             cartFileReadAndUpdate.seek(0)
             cartFileReadAndUpdate.writelines(cartFileLines)
             cartFileReadAndUpdate.close()
@@ -255,7 +249,7 @@ def showAddProductPanel():
 def showRemoveProductPanel():
     while True:
         cartFileReadAndUpdate = open(
-            "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+            path_cartFile, "r+")
         cartFileLines = cartFileReadAndUpdate.readlines()
         cartFileLinesLength = len(cartFileLines)
 
@@ -273,7 +267,7 @@ def showRemoveProductPanel():
             cartFileLinesUpdated = cartFileLines[:int(
                 option) - 1] + cartFileLines[int(option):]
             cartFileWrite = open(
-                "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "w")
+                path_cartFile, "w")
             cartFileWrite.writelines(cartFileLinesUpdated)
             cartFileWrite.close()
 
@@ -297,7 +291,7 @@ def showRemoveProductPanel():
 def checkTotalAmountOfProductsInCart():
     totalAmount = 0
     cartFileRead = open(
-        "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r")
+        path_cartFile, "r")
     cartFileLines = cartFileRead.readlines()
     for line in cartFileLines:
         line = line.rstrip()
@@ -309,7 +303,7 @@ def checkTotalAmountOfProductsInCart():
 def showCart():
     while True:
         cartFileReadAndUpdate = open(
-            "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "r+")
+            path_cartFile, "r+")
         cartFileLines = cartFileReadAndUpdate.readlines()
         cartFileLinesLength = len(cartFileLines)
 
@@ -328,7 +322,15 @@ def showCart():
         if cartFileLinesLength != 0:
             print("<>---ProductsInCart---<>")
             for i in range(cartFileLinesLength):
-                print(f'<> {cartFileLines[i].rstrip()}')
+                cart_item = cartFileLines[i].rstrip()
+                if ":" not in cart_item:
+                    # original ver of cart file
+                    pass
+                else:
+                    # version 2 of cart file
+                    item_id = cart_item.split(":")[0]
+                    cart_item = cart_item.split(":")[1]                    
+                print(f'<> {cart_item}')
             print(f"<>---TotalAmount >> {checkTotalAmountOfProductsInCart()}$")
 
         option = input("Your choice >> ")
@@ -349,6 +351,8 @@ def showCart():
 
 def checkProductPrice(productName):
     for product in products:
+        if ":" in productName: # coz productName can be in original version or version 2
+            productName = productName.split(":")[1]
         if product["name"] == productName:
             return product["price"]
 # ---</CART>---
@@ -362,7 +366,7 @@ def showOrderPanel(redirectedFrom):
         print("Are you sure to order?")
 
         print("1. Order")
-        print("2. Cancel")
+        print("2. Cancel order")
         print("`. Back")
         print("0. Exit")
 
@@ -370,7 +374,7 @@ def showOrderPanel(redirectedFrom):
         if option == "1":
             # CLEAN CART
             cartFileWrite = open(
-                "PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt", "w")
+                path_cartFile, "w")
             cartFileWrite.writelines("")
             cartFileWrite.close()
 
@@ -380,7 +384,14 @@ def showOrderPanel(redirectedFrom):
             print("------------------------------\n")
             showLandingPage()
             return
-        elif option == "2" or "`":
+
+        # test cancel function here
+
+        elif option == "2":
+                Item_canceling.cancel_order(sqlConnect, cursor, 1)
+                showLandingPage()
+                return
+        elif option == "`":
             if redirectedFrom == "cart":
                 showCart()
                 return
