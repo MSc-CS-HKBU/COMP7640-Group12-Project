@@ -1,6 +1,7 @@
 import pymysql
 import Item_search
 
+
 # cancel item
 def cancel_item(db, cursor):
     # in progress
@@ -35,27 +36,17 @@ def cancel_item(db, cursor):
 
 # cancel entire order
 def cancel_order(db, cursor, user_id):
-    # still need a little optimize after purchase function finish
-    option = input("Are you sure to cancel the entire order?(y/n)")
-    if option == "y":
-        sql = "DELETE FROM orders WHERE Customer_ID = %s"%user_id
-        try:
-            # 执行sql语句
-            cursor.execute(sql)
-            # push to database execute
-            db.commit()
+    sql = "DELETE FROM orders WHERE Customer_ID = %s" % user_id
+    try:
+        # 执行sql语句
+        cursor.execute(sql)
+        # push to database execute
+        db.commit()
 
 
-        except pymysql.Error as e:
-            print(e.args[0], e.args[1])
-            db.rollback()
-        print("order cancel")
-        # come back to first page
-        return
-    elif option == "n":
-        # come back to shopping cart
-        return
-    else:
-        print("\n[!] You've entered invalid character.")
-        cancel_order(db, cursor, user_id)
-
+    except pymysql.Error as e:
+        print(e.args[0], e.args[1])
+        db.rollback()
+    print("order cancel")
+    # come back to first page
+    return

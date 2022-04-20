@@ -16,17 +16,18 @@ def search_item(db, cursor):
 
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
+    return
 
-    print("1. Search again")
-    print("`. Back")
-    print("0. Exit")
-    option = input("Enter number to select option >> ")
-    if option == "0":
-        print("See you again!")
-        exit()
-    elif option == "1":
-        search_item(db, cursor)
-    elif option == "`":
-        return
-    else:
-        print("\n[!] You've entered invalid character.")
+    # print("1. Search again")
+    # print("`. Back")
+    # print("0. Exit")
+    # option = input("Enter number to select option >> ")
+    # if option == "0":
+    #     print("See you again!")
+    #     exit()
+    # elif option == "1":
+    #     search_item(db, cursor)
+    # elif option == "`":
+    #     return
+    # else:
+    #     print("\n[!] You've entered invalid character.")

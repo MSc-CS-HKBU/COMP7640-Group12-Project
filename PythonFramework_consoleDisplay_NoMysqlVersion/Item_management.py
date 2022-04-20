@@ -23,18 +23,19 @@ def get_items_in_a_shop(db, cursor):
         print(e.args[0], e.args[1])
         # rollback when wrong happen
         db.rollback()
+    return
 
-    option = input("Enter number to select option >> ")
-    if option == "0":
-        print("See you again!")
-        exit()               # 目前是退出程序，如果后面添加了登录前界面，就把exit()改成call返回登录前的函数
-    elif option == "`":
-    #     showLandingPage()
-        return
-    elif option == "1":
-        get_items_in_a_shop(db, cursor)
-    else:
-        print("\n[!] You've entered invalid character.")
+    # option = input("Enter number to select option >> ")
+    # if option == "0":
+    #     print("See you again!")
+    #     exit()               # 目前是退出程序，如果后面添加了登录前界面，就把exit()改成call返回登录前的函数
+    # elif option == "`":
+    # #     showLandingPage()
+    #     return
+    # elif option == "1":
+    #     get_items_in_a_shop(db, cursor)
+    # else:
+    #     print("\n[!] You've entered invalid character.")
 
 
 # insert new item
@@ -49,7 +50,7 @@ def insert_item(db, cursor):
         if i == 'Item_ID':
             print("please begin form 'p',such as p01")
         content = input('%s='%i,)
-        print(content)
+        # print(content)
         item.update({'%s'%i: content})
         # item=kwargs
     print(item)
@@ -73,17 +74,18 @@ def insert_item(db, cursor):
             print(e.args[0], e.args[1])
         # rollback when wrong happen
         db.rollback()
+    return
 
-    print("`. Back")
-    print("0. Exit")
-    print("1. Insert again")
-    option = input("Enter number to select option >> ")
-    if option == "0":
-        print("See you again!")
-        exit()     # 目前是退出程序，如果后面添加了登录前界面，就把exit()改成call返回登录前的函数
-    elif option == "`":
-        return
-    elif option == "1":
-        insert_item(db, cursor)
-    else:
-        print("\n[!] You've entered invalid character.")
+    # print("`. Back")
+    # print("0. Exit")
+    # print("1. Insert again")
+    # option = input("Enter number to select option >> ")
+    # if option == "0":
+    #     print("See you again!")
+    #     exit()     # 目前是退出程序，如果后面添加了登录前界面，就把exit()改成call返回登录前的函数
+    # elif option == "`":
+    #     return
+    # elif option == "1":
+    #     insert_item(db, cursor)
+    # else:
+    #     print("\n[!] You've entered invalid character.")
