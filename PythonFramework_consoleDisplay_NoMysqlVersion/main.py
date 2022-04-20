@@ -4,7 +4,7 @@ import Item_management
 import Item_search
 import Shop_management
 import Item_canceling
-import Item_purchase
+import customer_operation
 
 USER_FIRST_NAME = str()
 USER_LAST_NAME = str()
@@ -87,6 +87,9 @@ def showLandingPage():
         print("p. Purchase cart items")
         print("s. Shops")
         print("a. add shop")
+        print("r. register")
+        print("l. log in")
+        print("d. delete account")
 
         print("i. show Items in a shop")
         print("5. insert new Item")
@@ -170,6 +173,17 @@ def showLandingPage():
             showLandingPage()
         elif option == "6":   # search items
             Item_search.search_item(sqlConnect, cursor)
+            showLandingPage()
+        elif option == "r":   # register
+            customer_operation.regiter(sqlConnect, cursor)
+            showLandingPage()
+        elif option == "l":   # log in and log out
+            user_id, username = customer_operation.log_in(sqlConnect, cursor)
+            print(user_id, username)
+            customer_operation.log_out(username)
+            showLandingPage()
+        elif option == "d":   # delete account
+            customer_operation.close_account(sqlConnect, cursor)
             showLandingPage()
         else:
             print("\n[!] You've entered invalid character.")
