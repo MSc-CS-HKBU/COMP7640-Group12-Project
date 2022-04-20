@@ -7,17 +7,13 @@ def get_items_in_a_shop(db, cursor):
     sql = "SELECT * FROM items i, shop s where i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
     # sql = "SELECT * FROM items where Shop_ID =1"
     try:
-        # 执行sql语句
+        # execute sql
         cursor.execute(sql)
         # get data
         data = cursor.fetchall()
         print("\n----Items----")
         for i in range(0, len(data), 1):
             print(data[i])
-        print("`. Back")  # 返回登录后主界面
-        print("0. log out")
-        print("1. search again")
-
 
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
@@ -25,34 +21,18 @@ def get_items_in_a_shop(db, cursor):
         db.rollback()
     return
 
-    # option = input("Enter number to select option >> ")
-    # if option == "0":
-    #     print("See you again!")
-    #     exit()               # 目前是退出程序，如果后面添加了登录前界面，就把exit()改成call返回登录前的函数
-    # elif option == "`":
-    # #     showLandingPage()
-    #     return
-    # elif option == "1":
-    #     get_items_in_a_shop(db, cursor)
-    # else:
-    #     print("\n[!] You've entered invalid character.")
-
 
 # insert new item
 def insert_item(db, cursor):
     print("\n----Please enter what you want to add----")
     Item_column=(
         'Item_ID','Item_Name','Price','Shop_ID','Item_qty','Classification','Description','Indications')
-    # Item_column = (
-    # 'Item_ID', 'Item_Name')
     item={}
     for i in Item_column:
         if i == 'Item_ID':
             print("please begin form 'p',such as p01")
         content = input('%s='%i,)
-        # print(content)
         item.update({'%s'%i: content})
-        # item=kwargs
     print(item)
     sql = "INSERT INTO items VALUES('%s','%s',%s,'%s', %s, \
     '%s', '%s', '%s')"% \
@@ -61,7 +41,7 @@ def insert_item(db, cursor):
     print("sql=",sql)
 
     try:
-        # 执行sql语句
+        # execute sql
         cursor.execute(sql)
         # push to database execute
         db.commit()
@@ -75,17 +55,3 @@ def insert_item(db, cursor):
         # rollback when wrong happen
         db.rollback()
     return
-
-    # print("`. Back")
-    # print("0. Exit")
-    # print("1. Insert again")
-    # option = input("Enter number to select option >> ")
-    # if option == "0":
-    #     print("See you again!")
-    #     exit()     # 目前是退出程序，如果后面添加了登录前界面，就把exit()改成call返回登录前的函数
-    # elif option == "`":
-    #     return
-    # elif option == "1":
-    #     insert_item(db, cursor)
-    # else:
-    #     print("\n[!] You've entered invalid character.")

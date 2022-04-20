@@ -38,7 +38,7 @@ def cancel_item(db, cursor):
 def cancel_order(db, cursor, user_id):
     sql = "DELETE FROM orders WHERE Customer_ID = %s" % user_id
     try:
-        # 执行sql语句
+        # execute sql
         cursor.execute(sql)
         # push to database execute
         db.commit()
