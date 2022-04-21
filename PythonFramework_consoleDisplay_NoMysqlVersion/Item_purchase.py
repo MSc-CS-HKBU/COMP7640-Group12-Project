@@ -1,22 +1,23 @@
 import pymysql, random
 
+
 # purchase items in cart
 def purchase_item_in_cart(db, cursor):
     # in progress
-    print("y. Yes")
-    print("n. No")
-    print("`. Back")
-    print("0. Exit")
-    option = input("Confirm to place order [y/n]>> ")
-    if option == "0":
-        print("See you again!")
-        exit()    
-    if option == "y":
+    # print("y. Yes")
+    # print("n. No")
+    # print("`. Back")
+    # print("0. Exit")
+    # option = input("Confirm to place order [y/n]>> ")
+    # if option == "0":
+    #     print("See you again!")
+    #     exit()    
+    # if option == "y":
         # INSERT INTO orders (Order_ID, Customer_ID, Shop_ID, Item_ID, Item_Name, Item_qty, Price) VALUES (%s, %s, %s, %s, %s, %s, %s)
         # sql = "SELECT Item_Name,Price,Item_qty,Description,Keyword1,Keyword2 FROM items WHERE Item_Name = '%s' OR \
         # Keyword1 = '%s' OR Keyword2='%s'"%(option,option,option)
 
-        cart_items = [x.strip() for x in open('cart.txt')] # read all lines in txt into list
+        cart_items = [x.strip() for x in open('./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt')] # read all lines in txt into list
 
         order_id = f"A{str(random.getrandbits(20))}" # generate A<number>, <number> is 20-bit integer (i.e. max 2^20 - 1)
         customer_id = 1 # hard coded, should change to dynamic with db later
@@ -55,13 +56,12 @@ def purchase_item_in_cart(db, cursor):
                 print(e.args[0], e.args[1])
 
         # clear cart
-        open('cart.txt', 'w').close()
+        open('./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt', 'w').close()
 
-        print("Order placed")
 
-    elif option == "n":
-        return
-    elif option == "`":
-        return
-    else:
-        print("\n[!] You've entered invalid character.")
+    # elif option == "n":
+    #     showLandingPage()
+    # elif option == "`":
+    #     showLandingPage()
+    # else:
+    #     print("\n[!] You've entered invalid character.")
