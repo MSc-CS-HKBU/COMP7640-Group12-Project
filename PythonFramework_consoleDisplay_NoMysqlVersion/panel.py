@@ -52,22 +52,22 @@ def showLandingPage(user_name):
         elif option == "2":
             loginPanel()
         elif option == "3":
-            showShopPanel()
+            showShopPanel(user_name)
         elif option == "4":
-            showItempanel()
+            showItempanel(user_name)
         elif option == "5":
-            searchItemsPanel()
+            searchItemsPanel(user_name)
         # cart place in here 6
         elif option == "7":
-            purchaseOrderCartPanel()
+            purchaseOrderCartPanel(user_name)
         elif option == "8":
-            cancelOrderPanel()
+            cancelOrderPanel(user_name)
         elif option == "9":
-            logoutPanel()
+            logoutPanel(user_name)
         elif option == "m":
-            managementPanel()
+            managementPanel(user_name)
         elif option == "*":
-            deleteAccountPanel()
+            deleteAccountPanel(user_name)
         elif option == "0":
             closeShop(user_name)
         else:
@@ -132,7 +132,7 @@ def loginPanel():
 # ---</Login>---
 
 # ---</All Shop>---
-def showShopPanel():
+def showShopPanel(user_name):
     while True:
         print("\n-------All Shops-------")
         print("1. Shop all the shops")
@@ -154,7 +154,7 @@ def showShopPanel():
 # ---</All Shop>---
 
 # ---</Show Items By Shops>---
-def showItempanel():
+def showItempanel(user_name):
     while True:
         print("\n-------Searching-------")
         print("1. Show all the shop")
@@ -197,7 +197,7 @@ def showItempanel():
 # ---</Show Items By Shops>---
 
 # ---</Search Items>---
-def searchItemsPanel():
+def searchItemsPanel(user_name):
     while True:
         print("-------Searching Items-------")
         print("1. Search items")
@@ -219,7 +219,7 @@ def searchItemsPanel():
 # ---</Search Items>---
 
 # ---</Order>---
-def purchaseOrderCartPanel():
+def purchaseOrderCartPanel(user_name):
     while True:
         print("-------Purchase cart items-------")
         print("y. Yes")
@@ -250,7 +250,7 @@ def purchaseOrderCartPanel():
 # ---</Order>---
 
 # ---</Cancel order>---
-def cancelOrderPanel():
+def cancelOrderPanel(user_name):
     while True:
         print("-------Cancle orders-------")
         print("y. Yes")
@@ -278,7 +278,7 @@ def cancelOrderPanel():
 # ---</Cancel order>---
 
 # ---</Logout>---
-def logoutPanel():
+def logoutPanel(user_name):
     while True:
         print("\n-------Log out-------")
         print("y. Yes")
@@ -306,7 +306,7 @@ def logoutPanel():
 # ---</Logout>---
 
 # ---</Management(Shop/Item)>---
-def managementPanel():
+def managementPanel(user_name):
     while True:
         print("\n-------Management System-------")
         print("1. Add Shop")
@@ -361,7 +361,7 @@ def managementPanel():
 # ---</Management(Shop/Item)>---
 
 # ---</Delete Account>---
-def deleteAccountPanel():
+def deleteAccountPanel(user_name):
     while True:
         print("\n-------Delete Account-------")
         print("1. Delete Account(Be careful!)")
