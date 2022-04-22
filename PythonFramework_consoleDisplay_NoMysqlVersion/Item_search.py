@@ -1,5 +1,8 @@
 import pymysql
 
+from prettytable import PrettyTable
+from prettytable import DEFAULT
+
 
 # search items
 def search_item(db, cursor):
@@ -14,8 +17,17 @@ def search_item(db, cursor):
         if len(data) == 0:
             print("Sorry, we do not have this item now, try another like Nin Jiom?")
             return
+
+        table = PrettyTable(['Item_Name','Price','Item remaining','Classification','Description','Indications'])
+
         for i in data:
-            print(i)
+            table.add_row([i[0], i[1], i[2], i[3],i[4],i[5]])
+        table.set_style(DEFAULT)
+        print(table)
+
+        # for i in data:
+        #     print(i)
+
 
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
