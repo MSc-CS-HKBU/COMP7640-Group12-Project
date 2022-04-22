@@ -176,7 +176,6 @@ def showItempanel(user_name):
             if option == "1":
                 print("\n-------Items-------")
                 Item_management.get_items_in_a_shop(sqlConnect, cursor)
-                print("\n-------Items-------")
                 continue 
             elif option == "`":
                 showLandingPage(user_name)
@@ -199,13 +198,13 @@ def showItempanel(user_name):
 # ---</Search Items>---
 def searchItemsPanel(user_name):
     while True:
-        print("-------Searching Items-------")
+        print("\n-------Searching Items-------")
         print("1. Search items")
         print("`. Back")
         print("0. Exit")
         option = input("Enter number to select option >> ")
         if option == "1":
-            print("-------Searching Result-------")
+            print("\n-------Searching Result-------")
             Item_search.search_item(sqlConnect, cursor)
             continue
         elif option == "`":
@@ -261,7 +260,6 @@ def cancelOrderPanel(user_name):
         if option == "y":
             print("\n-------Orders canceling-------")
             Item_canceling.cancel_order(sqlConnect, cursor,user_id)
-            print("-------Orders canceling-------")
             showLandingPage(user_name)
             continue
         elif option == "n":
@@ -288,7 +286,6 @@ def logoutPanel(user_name):
         option = input("Confirm to log out [y/n]>> ")
         if option == "y":
             print("\n-------Log in again to confirm-------")
-            user_id, user_name = customer_operation.log_in(sqlConnect, cursor)
             user_id, user_name = customer_operation.log_out(user_name)
             showLandingPage(user_name)
             continue

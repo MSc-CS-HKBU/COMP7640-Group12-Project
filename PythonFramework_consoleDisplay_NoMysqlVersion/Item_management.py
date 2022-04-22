@@ -1,19 +1,41 @@
 import pymysql
 
+from prettytable import PrettyTable
+from prettytable import DEFAULT
+
+
+
 
 # get all items in a shop
 def get_items_in_a_shop(db, cursor):
     shop_name = input("please input the shop name which you want to search: ")
+
+    sql = "SELECT Item_Name,Price,Item_qty,Classification,Description,Indications FROM items i, shop s where " \
+          "i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
+
     sql = "SELECT * FROM items i, shop s where i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
     # sql = "SELECT * FROM items where Shop_ID =1"
+
     try:
         # execute sql
         cursor.execute(sql)
         # get data
         data = cursor.fetchall()
-        print("\n----Items----")
-        for i in range(0, len(data), 1):
-            print(data[i])
+
+        if data is None:
+            print("No items found")
+            return
+        table = PrettyTable(['Item_Name', 'Price', 'Item remaining', 'Classification', 'Description', 'Indications'])
+
+        for i in data:
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5]])
+        table.set_style(DEFAULT)
+        print(table)
+
+        # print("\n----Items----")
+        # for i in range(0, len(data), 1):
+        #     print(data[i])
+
 
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
@@ -24,6 +46,7 @@ def get_items_in_a_shop(db, cursor):
 
 # insert new item
 def insert_item(db, cursor):
+    print("\n----Please enter what you want to add----")
     Item_column=(
         'Item_ID','Item_Name','Price','Shop_ID','Item_qty','Classification','Description','Indications')
     item={}
