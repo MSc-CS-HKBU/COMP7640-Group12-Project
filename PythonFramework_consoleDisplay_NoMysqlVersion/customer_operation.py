@@ -59,7 +59,6 @@ def log_in(db, cursor):
         # get data
         data = cursor.fetchone()
         if data is None:
-            print("\n-------Login Result-------")
             print('login failed')
             return 0, ''
         else:
@@ -73,7 +72,6 @@ def log_in(db, cursor):
 
 # log out function, exit the current account to the visitor status
 def log_out(user_name):
-    print("\n-------Logout Result-------")
     print("Account %s have logged out"%user_name)
     user_id = 0
     user_name = ''
@@ -84,6 +82,21 @@ def log_out(user_name):
 def close_account(db, cursor):
     Name = input("Please enter the Name >> ")
     Password = input("Please enter the Password >> ")
+
+
+    sql = "SELECT * FROM customer WHERE Name = '%s' AND Password = '%s'" % (Name, Password)
+    try:
+        # execute sql
+        cursor.execute(sql)
+        # get data
+        data = cursor.fetchone()
+        if data is None:
+            print('Name or Password incorrect')
+            return
+
+    except pymysql.Error as e:
+        print(e.args[0], e.args[1])
+
 
     sql = "DELETE FROM customer WHERE Name = '%s' AND Password = '%s'" % (Name, Password)
     try:

@@ -52,22 +52,22 @@ def showLandingPage(user_name):
         elif option == "2":
             loginPanel()
         elif option == "3":
-            showShopPanel()
+            showShopPanel(user_name)
         elif option == "4":
-            showItempanel()
+            showItempanel(user_name)
         elif option == "5":
-            searchItemsPanel()
+            searchItemsPanel(user_name)
         # cart place in here 6
         elif option == "7":
-            purchaseOrderCartPanel()
+            purchaseOrderCartPanel(user_name)
         elif option == "8":
-            cancelOrderPanel()
+            cancelOrderPanel(user_name)
         elif option == "9":
-            logoutPanel()
+            logoutPanel(user_name)
         elif option == "m":
-            managementPanel()
+            managementPanel(user_name)
         elif option == "*":
-            deleteAccountPanel()
+            deleteAccountPanel(user_name)
         elif option == "0":
             closeShop(user_name)
         else:
@@ -132,7 +132,7 @@ def loginPanel():
 # ---</Login>---
 
 # ---</All Shop>---
-def showShopPanel():
+def showShopPanel(user_name):
     while True:
         print("\n-------All Shops-------")
         print("1. Shop all the shops")
@@ -154,7 +154,7 @@ def showShopPanel():
 # ---</All Shop>---
 
 # ---</Show Items By Shops>---
-def showItempanel():
+def showItempanel(user_name):
     while True:
         print("\n-------Searching-------")
         print("1. Show all the shop")
@@ -176,7 +176,6 @@ def showItempanel():
             if option == "1":
                 print("\n-------Items-------")
                 Item_management.get_items_in_a_shop(sqlConnect, cursor)
-                print("\n-------Items-------")
                 continue 
             elif option == "`":
                 showLandingPage(user_name)
@@ -197,15 +196,15 @@ def showItempanel():
 # ---</Show Items By Shops>---
 
 # ---</Search Items>---
-def searchItemsPanel():
+def searchItemsPanel(user_name):
     while True:
-        print("-------Searching Items-------")
+        print("\n-------Searching Items-------")
         print("1. Search items")
         print("`. Back")
         print("0. Exit")
         option = input("Enter number to select option >> ")
         if option == "1":
-            print("-------Searching Result-------")
+            print("\n-------Searching Result-------")
             Item_search.search_item(sqlConnect, cursor)
             continue
         elif option == "`":
@@ -219,7 +218,7 @@ def searchItemsPanel():
 # ---</Search Items>---
 
 # ---</Order>---
-def purchaseOrderCartPanel():
+def purchaseOrderCartPanel(user_name):
     while True:
         print("-------Purchase cart items-------")
         print("y. Yes")
@@ -250,7 +249,7 @@ def purchaseOrderCartPanel():
 # ---</Order>---
 
 # ---</Cancel order>---
-def cancelOrderPanel():
+def cancelOrderPanel(user_name):
     while True:
         print("-------Cancle orders-------")
         print("y. Yes")
@@ -261,7 +260,6 @@ def cancelOrderPanel():
         if option == "y":
             print("\n-------Orders canceling-------")
             Item_canceling.cancel_order(sqlConnect, cursor,user_id)
-            print("-------Orders canceling-------")
             showLandingPage(user_name)
             continue
         elif option == "n":
@@ -278,7 +276,7 @@ def cancelOrderPanel():
 # ---</Cancel order>---
 
 # ---</Logout>---
-def logoutPanel():
+def logoutPanel(user_name):
     while True:
         print("\n-------Log out-------")
         print("y. Yes")
@@ -288,7 +286,6 @@ def logoutPanel():
         option = input("Confirm to log out [y/n]>> ")
         if option == "y":
             print("\n-------Log in again to confirm-------")
-            user_id, user_name = customer_operation.log_in(sqlConnect, cursor)
             user_id, user_name = customer_operation.log_out(user_name)
             showLandingPage(user_name)
             continue
@@ -306,7 +303,7 @@ def logoutPanel():
 # ---</Logout>---
 
 # ---</Management(Shop/Item)>---
-def managementPanel():
+def managementPanel(user_name):
     while True:
         print("\n-------Management System-------")
         print("1. Add Shop")
@@ -361,7 +358,7 @@ def managementPanel():
 # ---</Management(Shop/Item)>---
 
 # ---</Delete Account>---
-def deleteAccountPanel():
+def deleteAccountPanel(user_name):
     while True:
         print("\n-------Delete Account-------")
         print("1. Delete Account(Be careful!)")
