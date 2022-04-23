@@ -43,7 +43,7 @@ def showLandingPage(user_name):
         else:
             print(f"6. Cart [{productsInCartQuantity}]")
 
-        print("7. Order")
+        print("7. Place order")
         print("8. Cancel order")
         print("9. Logout")
         print("m. Management(Shop/Item)")

@@ -4,13 +4,13 @@ import Item_search
 
 
 # cancel item
-def cancel_order_item(db, cursor):
+def cancel_order_item(db, cursor, user_id):
     # in progress
     option = input("Please enter what you want to search >> ")
     sql = "SELECT Item_Name,Price,Item_qty,Description,Keyword1,Keyword2 FROM items WHERE Item_Name = '%s' OR \
     Keyword1 = '%s' OR Keyword2='%s'" % (option, option, option)
     try:
-        # 执行sql语句
+        # execute sql command
         cursor.execute(sql)
         # get data
         data = cursor.fetchall()
@@ -39,7 +39,7 @@ def cancel_order_item(db, cursor):
 def cancel_whole_order(db, cursor, user_id):
     sql = "DELETE FROM orders WHERE Customer_ID = %s" % user_id
     try:
-        # 执行sql语句
+        # execute sql command
         cursor.execute(sql)
         # push to database execute
         db.commit()
