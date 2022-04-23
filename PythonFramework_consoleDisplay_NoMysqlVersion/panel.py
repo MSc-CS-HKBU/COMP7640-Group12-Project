@@ -176,6 +176,7 @@ def showItempanel(user_name):
             if option == "1":
                 print("\n-------Items-------")
                 shop_name = input("Please input the shop name which you want to search: ")
+                print("Please enter item ID to add it to the cart")
                 Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
                 continue 
             elif option == "`":

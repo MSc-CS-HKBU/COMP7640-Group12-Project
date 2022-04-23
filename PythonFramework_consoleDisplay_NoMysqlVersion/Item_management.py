@@ -1,48 +1,49 @@
 import pymysql
 from prettytable import DEFAULT, PrettyTable
 
-# def showAddProductPanel(products):
-#     print("\n----Products----")
+def showAddProductPanel(db, cursor, shop_name):
+    print("\n----Products----")
 
-#     print("[1...] Enter product number to add it to the cart")
-#     print("`. Back")
-#     print("0. Exit")
+    # print("[1...] Enter product number to add it to the cart")
+    # print("`. Back")
+    # print("0. Exit")
 
-#     while True:
-#         for i in range(len(products)):
-#             print(f'|{i + 1}| {products[i]["name"]} -> {products[i]["price"]}')
+    get_items_in_a_shop(db, cursor, shop_name)
 
-#         option = input("Your choice >> ")
-#         if option == "`":
-#             showProducts()
-#             return
-#         if option == "0":
-#             shutdown()
-#         if int(option) > 0 and int(option) <= len(products):
-#             cartFileReadAndUpdate = open(
-#                 path_cartFile, "r+")
-#             cartFileLines = cartFileReadAndUpdate.readlines()
-#             target_product = products[int(option) - 1]
-#             cartFileLines.insert(
-#                 0, f'{target_product["id"]}:{target_product["name"]}:{target_product["price"]}\n')
-#             cartFileReadAndUpdate.seek(0)
-#             cartFileReadAndUpdate.writelines(cartFileLines)
-#             cartFileReadAndUpdate.close()
+    # while True:
+    #     for i in range(len(products)):
+    #         print(f'|{i + 1}| {products[i]["name"]} -> {products[i]["price"]}')
 
-#             print("\n----------------------------------------")
-#             print("SUCCESS")
-#             print("Product added to the cart")
-#             print("----------------------------------------\n")
-#             showLandingPage()
-#             return
-#         else:
-#             print("\n[!] You've entered wrong character")
+    #     option = input("Your choice >> ")
+    #     if option == "`":
+    #         showProducts()
+    #         return
+    #     if option == "0":
+    #         shutdown()
+    #     if int(option) > 0 and int(option) <= len(products):
+    #         cartFileReadAndUpdate = open(
+    #             path_cartFile, "r+")
+    #         cartFileLines = cartFileReadAndUpdate.readlines()
+    #         target_product = products[int(option) - 1]
+    #         cartFileLines.insert(
+    #             0, f'{target_product["id"]}:{target_product["name"]}:{target_product["price"]}\n')
+    #         cartFileReadAndUpdate.seek(0)
+    #         cartFileReadAndUpdate.writelines(cartFileLines)
+    #         cartFileReadAndUpdate.close()
+
+    #         print("\n----------------------------------------")
+    #         print("SUCCESS")
+    #         print("Product added to the cart")
+    #         print("----------------------------------------\n")
+    #         showLandingPage()
+    #         return
+    #     else:
+    #         print("\n[!] You've entered wrong character")
 
 # get all items in a shop
 def get_items_in_a_shop(db, cursor, shop_name):
     
-
-    sql = "SELECT Item_Name,Price,Item_qty,Classification,Description,Indications FROM items i, shop s where " \
+    sql = "SELECT Item_ID, Item_Name,Price,Item_qty,Classification,Description,Indications FROM items i, shop s where " \
           "i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
 
     # sql = "SELECT * FROM items i, shop s where i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
@@ -57,10 +58,10 @@ def get_items_in_a_shop(db, cursor, shop_name):
         if data is None:
             print("No items found")
             return
-        table = PrettyTable(['Item_Name', 'Price', 'Item remaining', 'Classification', 'Description', 'Indications'])
+        table = PrettyTable(['Item_ID', 'Item_Name', 'Price', 'Item remaining', 'Classification', 'Description', 'Indications'])
 
         for i in data:
-            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5]])
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
         table.set_style(DEFAULT)
         print(table)
 
