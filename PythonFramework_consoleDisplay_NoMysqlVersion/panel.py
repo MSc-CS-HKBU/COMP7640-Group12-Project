@@ -456,7 +456,7 @@ def cancelOrderPanel(user_name):
         option = input("Confirm to cancel order [y/n]>> ") 
         if option == "y":
             print("\n-------Orders canceling-------")
-            Order_canceling.cancel_whole_order(sqlConnect, cursor,user_id)
+            Order_canceling.cancel_user_all_orders(sqlConnect, cursor,user_id)
             showLandingPage(user_name)
             continue
         elif option == "n":
