@@ -8,8 +8,9 @@ def showAddProductPanel(db, cursor, shop_name):
     # print("`. Back")
     # print("0. Exit")
     # print("\nPlease enter item ID to add it to the cart")
-    print("\n")
-    get_items_in_a_shop(db, cursor, shop_name)
+
+    # print("\n")
+    # get_items_in_a_shop(db, cursor, shop_name)
 
     # while True:
     #     for i in range(len(products)):
@@ -40,6 +41,7 @@ def showAddProductPanel(db, cursor, shop_name):
     #         return
     #     else:
     #         print("\n[!] You've entered wrong character")
+    pass
 
 # get all items in a shop
 def get_items_in_a_shop(db, cursor, shop_name):

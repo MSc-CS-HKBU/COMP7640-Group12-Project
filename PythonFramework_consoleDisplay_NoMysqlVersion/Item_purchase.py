@@ -1,7 +1,6 @@
 import pymysql, random, globals
 
 def load_cart(path_cartFile):
-    # in progress
     cart_items = [x.strip() for x in open(globals.path_cartFile)] # read all lines in txt into list, e.g. P005:Kobayashi antipyretic patch:$20
 
     dict_cart_items = dict()
