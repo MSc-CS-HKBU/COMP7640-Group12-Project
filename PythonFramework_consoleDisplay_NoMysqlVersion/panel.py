@@ -67,9 +67,17 @@ def showLandingPage(user_name):
             # cart place in here 6
             cartPanel(user_name)        
         elif option == "7":
-            purchaseOrderCartPanel(user_name)
+            if user_name != '':
+                purchaseOrderCartPanel(user_name)
+            else:
+                print("\n[!] Please login before placing order")
+            continue
         elif option == "8":
-            cancelOrderPanel(user_name)
+            if user_name != '':
+                cancelOrderPanel(user_name)
+            else:
+                print("\n[!] Please login before placing order")
+            continue            
         elif option == "9":
             logoutPanel(user_name)
         elif option == "m":
@@ -90,11 +98,17 @@ def showLandingPage(user_name):
 # ---</Exit>---
 def closeShop(user_name):
     print("\n----------------------------------------")
+    print("\nSee you again %s!" % user_name)
     print("----------------------------------------\n")
     exit()
 
 
 # ---</Exit>---
+
+# ---</Registration>---
+def RegistrationPanel():
+    print("\n-------Registration-------")
+    print("1. Register")
     print("`. back")
     print("0. Exit")
     option = input("Enter number to select option >> ")
@@ -491,8 +505,13 @@ def cartPanel(user_name):
             return
         elif option == "1" and cartFileLinesLength != 0:
             # showOrderPanel("cart")
-            purchaseOrderCartPanel(user_name)
-            return
+            if user_name != '':
+                purchaseOrderCartPanel(user_name)
+                return
+            else:
+                print("\n[!] Please login before placing order")
+                showLandingPage(user_name)
+                return
         elif option == "-" and cartFileLinesLength != 0:
             showRemoveProductPanel(dict_cart_items)
             return
@@ -502,6 +521,7 @@ def cartPanel(user_name):
 
 # ---</Order>---
 def purchaseOrderCartPanel(user_name):
+
     while True:
         print("-------Purchase cart items-------")
         print("y. Yes")
@@ -510,7 +530,7 @@ def purchaseOrderCartPanel(user_name):
         print("0. Exit")
         option = input("Confirm to place order [y/n]>> ")
         if option == "y":
-            Item_purchase.purchase_items_in_cart(sqlConnect, cursor, 1)
+            Item_purchase.purchase_items_in_cart(sqlConnect, cursor, user_name)
             print("\n------------------------------")
             print("Orders have been confirmed")
             print("------------------------------")
@@ -538,20 +558,30 @@ def cancelOrderPanel(user_name):
     while True:
         print("-------Cancel orders-------")
 
-        # Show order lsit
+        # Show order list
 
-        print("y. Yes")
-        print("n. No")
+
+        print("1. Cancel order")
+        print("2. Cancel item(s) in order")
         print("`. Back")
         print("0. Exit")
-        option = input("Confirm to cancel order [y/n]>> ")
-        if option == "y":
+        option = input("Enter number to select option >> ")
+        if option == "1":
             print("\n-------Orders canceling-------")
-            Order_canceling.cancel_user_all_orders(sqlConnect, cursor,user_id)
-            showLandingPage(user_name)
+            order_id = input("Enter order ID >> ")
+            Order_canceling.cancel_user_single_order(sqlConnect, cursor, user_id, order_id)
+            # showLandingPage(user_name)
             continue
-        elif option == "n":
-            showLandingPage(user_name)
+        elif option == "2":
+            print("\n-------Order item(s) canceling-------")
+            order_id = input("Enter order ID to view content of order >> ")
+
+            # Show order content
+
+            item_id = input("Enter item ID >> ")
+
+            Order_canceling.cancel_order_single_item(sqlConnect, cursor,user_id, order_id, item_id)
+
             continue
         elif option == "`":
             showLandingPage(user_name)

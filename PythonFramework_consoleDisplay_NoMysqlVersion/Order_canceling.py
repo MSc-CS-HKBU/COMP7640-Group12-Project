@@ -53,7 +53,7 @@ def cancel_order_single_item(db, cursor, user_id, order_id, item_id):
 
 # cancel single order
 def cancel_user_single_order(db, cursor, user_id, order_id):
-    sql = "DELETE FROM orders WHERE Customer_ID = %s AND Order_ID = %s" % (user_id, order_id)
+    sql = "DELETE FROM orders WHERE Customer_ID = %s AND Order_ID = '%s'" % (user_id, order_id)
     try:
         # execute sql command
         cursor.execute(sql)
@@ -69,7 +69,7 @@ def cancel_user_single_order(db, cursor, user_id, order_id):
 
 # cancel all orders of a user
 def cancel_user_all_orders(db, cursor, user_id):
-    sql = "DELETE FROM orders WHERE Customer_ID = %s" % user_id
+    sql = "DELETE FROM orders WHERE Customer_ID = '%s'" % user_id
     try:
         # execute sql command
         cursor.execute(sql)
