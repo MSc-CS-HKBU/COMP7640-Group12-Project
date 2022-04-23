@@ -1,6 +1,6 @@
 # COMP7640-Group12-Project
-Online retail database application \
-Requirements: pymysql, prettytable \
+Online retail database application 
+Requirements: pymysql, prettytable
 
 Running Instruction:
 1.pip install -r requirements.txt
