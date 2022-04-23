@@ -441,7 +441,7 @@ def showProducts():
             print("\n[!] You've entered invalid character.")
 
 
-def showAddProductPanel():
+def showAddProductPanel(products):
     print("\n----Products----")
 
     print("[1...] Enter product number to add it to the cart")

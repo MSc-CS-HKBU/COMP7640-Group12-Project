@@ -175,7 +175,8 @@ def showItempanel(user_name):
             option = input("Enter number to select option >> ")
             if option == "1":
                 print("\n-------Items-------")
-                Item_management.get_items_in_a_shop(sqlConnect, cursor)
+                shop_name = input("Please input the shop name which you want to search: ")
+                Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
                 continue 
             elif option == "`":
                 showLandingPage(user_name)
