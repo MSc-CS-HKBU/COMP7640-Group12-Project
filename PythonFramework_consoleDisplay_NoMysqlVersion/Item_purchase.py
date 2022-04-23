@@ -34,7 +34,7 @@ def load_cart(path_cartFile):
 
 
 # purchase items in cart
-def purchase_item_in_cart(db, cursor, customer_id):
+def purchase_items_in_cart(db, cursor, customer_id):
     order_id = f"A{str(random.getrandbits(20))}" # generate A<number>, <number> is 20-bit integer (i.e. max 2^20 - 1)
 
     dict_cart_items = load_cart(globals.path_cartFile)

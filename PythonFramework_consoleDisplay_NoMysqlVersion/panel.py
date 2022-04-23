@@ -180,7 +180,7 @@ def showItempanel(user_name):
                 
                 shop_name = input("Please input the shop name which you want to search: ")  
 
-                print("\n-------Items-------")
+                print("\n-------Items in Shop-------")
                 shop_items = Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
 
                 while True:
@@ -284,7 +284,7 @@ def purchaseOrderCartPanel(user_name):
         print("0. Exit")
         option = input("Confirm to place order [y/n]>> ") 
         if option == "y":
-            Item_purchase.purchase_item_in_cart(sqlConnect, cursor, 1)
+            Item_purchase.purchase_items_in_cart(sqlConnect, cursor, 1)
             print("\n------------------------------")
             print("Orders have been confirmed")
             print("------------------------------")
