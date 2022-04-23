@@ -1,5 +1,3 @@
-P003:Panadol Extra Advance 50pcs:$109.00
-P003:Panadol Extra Advance 50pcs:$109.00
-P003:Panadol Extra Advance 50pcs:$109.00
-P003:Panadol Extra Advance 50pcs:$109.00
-P003:Panadol Extra Advance 50pcs:$109.00
+P001:Nin Jiom:$27.00
+P001:Nin Jiom:$27.00
+P005:Kobayashi antipyretic patch:$20
