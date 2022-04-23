@@ -11,7 +11,7 @@ cursor, sqlConnect = connetSql('7640_proj')
 user_name = ''
 user_id = 0
 # Define the path for shopping cart
-path_cartFile = r"./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
+path_cartFile = r"./cart.txt" # r"./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
 
 # ---</MAINPAGE>---
 def showLandingPage(user_name):
