@@ -37,7 +37,7 @@ import Item_search
 
 # cancel single item in an order
 def cancel_order_single_item(db, cursor, user_id, order_id, item_id):
-    sql = "DELETE FROM orders WHERE Customer_ID = %s AND Order_ID = %s AND Item_ID = %s" % (user_id, order_id, item_id)
+    sql = "DELETE FROM orders WHERE Customer_ID = %s AND Order_ID = '%s' AND Item_ID = '%s'" % (user_id, order_id, item_id)
     try:
         # execute sql command
         cursor.execute(sql)

@@ -506,7 +506,7 @@ def cartPanel(user_name):
         elif option == "1" and cartFileLinesLength != 0:
             # showOrderPanel("cart")
             if user_name != '':
-                purchaseOrderCartPanel(user_name)
+                purchaseOrderCartPanel(1) #user_name
                 return
             else:
                 print("\n[!] Please login before placing order")
@@ -530,7 +530,7 @@ def purchaseOrderCartPanel(user_name):
         print("0. Exit")
         option = input("Confirm to place order [y/n]>> ")
         if option == "y":
-            Item_purchase.purchase_items_in_cart(sqlConnect, cursor, user_name)
+            Item_purchase.purchase_items_in_cart(sqlConnect, cursor, 1) #user_name
             print("\n------------------------------")
             print("Orders have been confirmed")
             print("------------------------------")
@@ -569,7 +569,7 @@ def cancelOrderPanel(user_name):
         if option == "1":
             print("\n-------Orders canceling-------")
             order_id = input("Enter order ID >> ")
-            Order_canceling.cancel_user_single_order(sqlConnect, cursor, user_id, order_id)
+            Order_canceling.cancel_user_single_order(sqlConnect, cursor, 1, order_id)#user_name
             # showLandingPage(user_name)
             continue
         elif option == "2":
@@ -580,7 +580,7 @@ def cancelOrderPanel(user_name):
 
             item_id = input("Enter item ID >> ")
 
-            Order_canceling.cancel_order_single_item(sqlConnect, cursor,user_id, order_id, item_id)
+            Order_canceling.cancel_order_single_item(sqlConnect, cursor,1, order_id, item_id)#user_name
 
             continue
         elif option == "`":
