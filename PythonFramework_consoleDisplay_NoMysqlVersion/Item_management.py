@@ -13,7 +13,7 @@ def get_items_in_a_shop(db, cursor):
     sql = "SELECT Item_Name,Price,Item_qty,Classification,Description,Indications FROM items i, shop s where " \
           "i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
 
-    sql = "SELECT * FROM items i, shop s where i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
+    # sql = "SELECT * FROM items i, shop s where i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
     # sql = "SELECT * FROM items where Shop_ID =1"
 
     try:
@@ -28,7 +28,7 @@ def get_items_in_a_shop(db, cursor):
         table = PrettyTable(['Item_Name', 'Price', 'Item remaining', 'Classification', 'Description', 'Indications'])
 
         for i in data:
-            table.add_row([i[0], i[1], int(i[2]), i[3], i[4], i[5]])
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5]])
         table.set_style(DEFAULT)
         print(table)
 
