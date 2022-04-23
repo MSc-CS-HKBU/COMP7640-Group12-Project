@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-from numpy import isin
-=======
 from prettytable import DEFAULT, PrettyTable
->>>>>>> main
 
 import customer_operation
 import globals
@@ -17,11 +13,8 @@ cursor, sqlConnect = connetSql('7640_proj')
 # Initialize user_name and user_id for tourists
 user_name = ''
 user_id = 0
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # Define the path for shopping cart
 # path_cartFile = r"./cart.txt" # r"./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
 
@@ -35,7 +28,6 @@ def showLandingPage(user_name):
         productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
 
         # Landing Page
-<<<<<<< HEAD
         print(
             "\n|================|                 |================|\n|================| Online-Shopping |================|\n|================|                 |================|")
         if user_name != '':
@@ -43,14 +35,6 @@ def showLandingPage(user_name):
         else:
             print("Welcome!")
         print("Select option:")
-=======
-        print("\n|================|                 |================|\n|================| Online-Shopping |================|\n|================|                 |================|")
-        if user_name != '':
-            print("\nWelcome %s!"%user_name)
-        else:
-            print("Welcome!")
-        print("Select option:")            
->>>>>>> main
         print("1. Registration")
         print("2. Login")
         print("3. Show All The Shops")
@@ -63,11 +47,7 @@ def showLandingPage(user_name):
             print(f"6. Cart [{productsInCartQuantity}]")
 
         print("7. Order")
-<<<<<<< HEAD
         print("8. Cancle order")
-=======
-        print("8. Cancel order")
->>>>>>> main
         print("9. Logout")
         print("m. Management(Shop/Item)")
         print("*. Delete Account")
@@ -83,13 +63,9 @@ def showLandingPage(user_name):
             showItempanel(user_name)
         elif option == "5":
             searchItemsPanel(user_name)
-<<<<<<< HEAD
-        # cart place in here 6
-=======
         elif option == "6":
             # cart place in here 6
             cartPanel(user_name)        
->>>>>>> main
         elif option == "7":
             purchaseOrderCartPanel(user_name)
         elif option == "8":
@@ -106,35 +82,19 @@ def showLandingPage(user_name):
             print("\n[!] You've entered invalid character.")
             continue
 
-<<<<<<< HEAD
         break
 
 
-=======
-        break        
->>>>>>> main
 # ---</MAINPAGE>---
 
 # ---</Exit>---
 def closeShop(user_name):
     print("\n----------------------------------------")
-<<<<<<< HEAD
-    print("\nSee you again %s!" % user_name)
     print("----------------------------------------\n")
     exit()
 
 
-=======
-    print("\nSee you again %s!"%user_name)
-    print("----------------------------------------\n")
-    exit()
->>>>>>> main
 # ---</Exit>---
-
-# ---</Registration>---
-def RegistrationPanel():
-    print("\n-------Registration-------")
-    print("1. Register")
     print("`. back")
     print("0. Exit")
     option = input("Enter number to select option >> ")
@@ -152,11 +112,8 @@ def RegistrationPanel():
         else:
             print("\n[!] You've entered invalid character.")
             continue
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # ---</Registration>---
 
 # ---</Login>---
@@ -169,11 +126,7 @@ def loginPanel():
         option = input("Enter number to select option >> ")
         if option == "1":
             print("\n-------Login-------")
-<<<<<<< HEAD
             user_id, user_name = customer_operation.log_in(sqlConnect, cursor)
-=======
-            user_id, user_name =customer_operation.log_in(sqlConnect, cursor)
->>>>>>> main
             showLandingPage(user_name)
             break
         elif option == "`":
@@ -184,11 +137,8 @@ def loginPanel():
         else:
             print("\n[!] You've entered invalid character.")
             continue
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # ---</Login>---
 
 # ---</All Shop>---
@@ -211,11 +161,8 @@ def showShopPanel(user_name):
         else:
             print("\n[!] You've entered invalid character.")
             continue
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # ---</All Shop>---
 
 # ---</Show Items By Shops>---
@@ -232,28 +179,17 @@ def showItempanel(user_name):
             Shop_management.showShops(sqlConnect, cursor)
             print("\n-------All Shops-------")
             continue
-<<<<<<< HEAD
         elif option == "2":  # still need to be modified purchase function after show all the items in a shop
-=======
-        elif option == "2":    # still need to be modified purchase function after show all the items in a shop
->>>>>>> main
             print("\n-------Items-------")
             print("1. Search")
             print("`. Back")
             print("0. Exit")
             option = input("Enter number to select option >> ")
             if option == "1":
-<<<<<<< HEAD
 
                 shop_name = input("Please input the shop name which you want to search: ")
 
                 # print("\n-------Items in Shop-------")
-=======
-                
-                shop_name = input("Please input the shop name which you want to search: ")  
-
-                print("\n-------Items in Shop-------")
->>>>>>> main
                 shop_items = Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
 
                 while True:
@@ -262,25 +198,16 @@ def showItempanel(user_name):
                     print("1. Add item to cart")
                     # print("2. Enter Shop name")
                     print("`. Back")
-<<<<<<< HEAD
                     print("0. Exit")
 
                     option2 = input("Enter number to select option >> ")
                     if option2 == "1":
                         while True:  # To ensure item ID be valid
-=======
-                    print("0. Exit")                    
-                        
-                    option2 = input("Enter number to select option >> ")         
-                    if option2 == "1":
-                        while True: # To ensure item ID be valid
->>>>>>> main
                             item_id = input("Enter item ID >> ")
                             if item_id in shop_items:
                                 break
                             else:
                                 print("Please input valid item ID.")
-<<<<<<< HEAD
                                 # if input wrong, can let customer select whether continue to input'''
                                 print("\n\n-------Options-------")
                                 print("1. Add again")
@@ -318,60 +245,22 @@ def showItempanel(user_name):
                             else:
                                 print(
                                     "Invalid input for number of item (should be 0 or positive integer), please input again.")
-=======
-                        while True: # To ensure number of item being int
-                            item_qty = input("Enter number of item >> ")
-                            if item_qty.isdigit() and int(item_qty)>=0:
-                                item_qty = int(item_qty)
-                                cart = Item_purchase.load_cart(globals.path_cartFile)
-                                cart_item_qty = cart[item_id]['count'] if item_id in cart else 0
-                                if (cart_item_qty+item_qty) <= shop_items[item_id]['Item remaining']:
-                                    # save to cart.txt
-                                    for i in range(item_qty):
-                                        Item_purchase.write_cart(item_id, shop_items[item_id])  
-                                
-                                    shop_items = Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
-
-                                    if item_qty > 0:
-                                        print("\n Added to cart!")   
-                                    break                                     
-                                else:
-                                    print("Number of the requested item is more than that in stock of shop, please request fewer number of the item")                              
-                            else:
-                                print("Invalid input for number of item (should be 0 or positive integer), please input again.")
-                        
-
->>>>>>> main
 
                         continue
                     elif option2 == "`":
                         showLandingPage(user_name)
                         break
-<<<<<<< HEAD
                     elif option2 == "0":
                         closeShop(user_name)
-=======
-                    elif option2 == "0": 
-                        closeShop(user_name)    
->>>>>>> main
                     else:
                         print("\n[!] You've entered invalid character.")
                         continue
 
-<<<<<<< HEAD
                 continue
             elif option == "`":
                 showLandingPage(user_name)
                 break
             elif option == "0":
-=======
-
-                continue 
-            elif option == "`":
-                showLandingPage(user_name)
-                break
-            elif option == "0": 
->>>>>>> main
                 closeShop(user_name)
             else:
                 print("\n[!] You've entered invalid character.")
@@ -379,20 +268,13 @@ def showItempanel(user_name):
         elif option == "`":
             showLandingPage(user_name)
             break
-<<<<<<< HEAD
         elif option == "0":
-=======
-        elif option == "0": 
->>>>>>> main
             closeShop(user_name)
         else:
             print("\n[!] You've entered invalid character.")
             continue
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # ---</Show Items By Shops>---
 
 # ---</Search Items>---
@@ -404,7 +286,6 @@ def searchItemsPanel(user_name):
         print("0. Exit")
         option = input("Enter number to select option >> ")
         if option == "1":
-<<<<<<< HEAD
             item_keyword = input("Please input the item name or keywords which you want to search: ")
             search_item_result = Item_search.search_item(sqlConnect, cursor, item_keyword)
             while True:
@@ -471,11 +352,6 @@ def searchItemsPanel(user_name):
                     print("\n[!] You've entered invalid character.\n")
                     continue
         # continue
-=======
-            print("\n-------Searching Result-------")
-            Item_search.search_item(sqlConnect, cursor)
-            continue
->>>>>>> main
         elif option == "`":
             showLandingPage(user_name)
             break
@@ -484,11 +360,6 @@ def searchItemsPanel(user_name):
         else:
             print("\n[!] You've entered invalid character.\n")
             continue
-<<<<<<< HEAD
-
-
-# ---</Search Items>---
-=======
 # ---</Search Items>---
 
 # ---</Cart>---
@@ -628,7 +499,6 @@ def cartPanel(user_name):
         else:
             print("\n[!] You've entered invalid character.")        
 # ---</Cart>---
->>>>>>> main
 
 # ---</Order>---
 def purchaseOrderCartPanel(user_name):
@@ -638,11 +508,7 @@ def purchaseOrderCartPanel(user_name):
         print("n. No")
         print("`. Back")
         print("0. Exit")
-<<<<<<< HEAD
         option = input("Confirm to place order [y/n]>> ")
-=======
-        option = input("Confirm to place order [y/n]>> ") 
->>>>>>> main
         if option == "y":
             Item_purchase.purchase_items_in_cart(sqlConnect, cursor, 1)
             print("\n------------------------------")
@@ -663,36 +529,22 @@ def purchaseOrderCartPanel(user_name):
         else:
             print("\n[!] You've entered invalid character.")
             continue
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # ---</Order>---
 
 # ---</Cancel order>---
 def cancelOrderPanel(user_name):
     while True:
-<<<<<<< HEAD
         print("-------Cancle orders-------")
-=======
-        print("-------Cancel orders-------")
->>>>>>> main
         print("y. Yes")
         print("n. No")
         print("`. Back")
         print("0. Exit")
-<<<<<<< HEAD
         option = input("Confirm to cancle order [y/n]>> ")
         if option == "y":
             print("\n-------Orders canceling-------")
             Order_canceling.cancel_whole_order(sqlConnect, cursor, user_id)
-=======
-        option = input("Confirm to cancel order [y/n]>> ") 
-        if option == "y":
-            print("\n-------Orders canceling-------")
-            Order_canceling.cancel_whole_order(sqlConnect, cursor,user_id)
->>>>>>> main
             showLandingPage(user_name)
             continue
         elif option == "n":
@@ -706,11 +558,8 @@ def cancelOrderPanel(user_name):
         else:
             print("\n[!] You've entered invalid character.")
             continue
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # ---</Cancel order>---
 
 # ---</Logout>---
@@ -738,11 +587,8 @@ def logoutPanel(user_name):
         else:
             print("\n[!] You've entered invalid character.")
             continue
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # ---</Logout>---
 
 # ---</Management(Shop/Item)>---
@@ -798,11 +644,8 @@ def managementPanel(user_name):
         else:
             print("\n[!] You've entered invalid character.")
             continue
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 # ---</Management(Shop/Item)>---
 
 # ---</Delete Account>---
@@ -828,18 +671,3 @@ def deleteAccountPanel(user_name):
             print("\n[!] You've entered invalid character.")
             continue
 # ---</Delete Account>---
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-
-            
-
-        
->>>>>>> main
