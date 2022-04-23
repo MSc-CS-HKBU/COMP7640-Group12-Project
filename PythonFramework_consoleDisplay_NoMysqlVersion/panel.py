@@ -559,6 +559,7 @@ def cancelOrderPanel(user_name):
         print("-------Cancel orders-------")
 
         # Show order list
+        Order_canceling.get_orders(sqlConnect, cursor, 1)#user_name
 
 
         print("1. Cancel order")
@@ -577,6 +578,8 @@ def cancelOrderPanel(user_name):
             order_id = input("Enter order ID to view content of order >> ")
 
             # Show order content
+            Order_canceling.get_items_of_order(sqlConnect, cursor, 1, order_id)#user_name
+            
 
             item_id = input("Enter item ID >> ")
 

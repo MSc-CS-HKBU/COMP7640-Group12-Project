@@ -1,38 +1,64 @@
 import pymysql
+from prettytable import DEFAULT, PrettyTable
 
 import Item_search
 
+# get items of an order
+def get_items_of_order(db, cursor, user_id, order_id):
+    sql = "SELECT Item_ID, Item_Name, Item_qty, Price FROM orders WHERE Customer_ID='%s' AND Order_ID='%s'" % (user_id, order_id)
+    try:
+        # execute sql
+        cursor.execute(sql)
+        # get data
+        data = cursor.fetchall()
 
-# cancel order item
-# def cancel_order_single_item(db, cursor, user_id):
-#     # in progress
-#     option = input("Please enter what you want to search >> ")
-#     sql = "SELECT Item_Name,Price,Item_qty,Description,Keyword1,Keyword2 FROM items WHERE Item_Name = '%s' OR \
-#     Keyword1 = '%s' OR Keyword2='%s'" % (option, option, option)
-#     try:
-#         # execute sql command
-#         cursor.execute(sql)
-#         # get data
-#         data = cursor.fetchall()
-#         for i in data:
-#             print(i)
+        if len(data) == 0:
+            return
 
-#     except pymysql.Error as e:
-#         print(e.args[0], e.args[1])
 
-#     print("1. Search again")
-#     print("`. Back")
-#     print("0. Exit")
-#     option = input("Enter number to select option >> ")
-#     if option == "0":
-#         print("See you again!")
-#         exit()
-#     elif option == "1":
-#         Item_search.search_item(db, cursor)
-#     elif option == "`":
-#         return
-#     else:
-#         print("\n[!] You've entered invalid character.")
+        table = PrettyTable(['Item_ID', 'Item_Name', 'Item_qty', 'Price'])
+
+        for i in data:
+            table.add_row([i[0], i[1], i[2], i[3]])
+
+        table.set_style(DEFAULT)
+        print(table)
+
+
+
+    except pymysql.Error as e:
+        print(e.args[0], e.args[1])
+
+    return
+
+
+# get order list
+def get_orders(db, cursor, user_id):
+    sql = "SELECT DISTINCT Order_ID FROM orders WHERE Customer_ID='%s'" % (user_id)
+    try:
+        # execute sql
+        cursor.execute(sql)
+        # get data
+        data = cursor.fetchall()
+
+        if len(data) == 0:
+            return
+
+
+        table = PrettyTable(['Order_ID'])
+
+        for i in data:
+            table.add_row([i[0]])
+
+        table.set_style(DEFAULT)
+        print(table)
+
+
+
+    except pymysql.Error as e:
+        print(e.args[0], e.args[1])
+
+    return
 
 
 # cancel single item in an order
