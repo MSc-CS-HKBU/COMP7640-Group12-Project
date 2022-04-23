@@ -18,10 +18,10 @@ def get_items_in_a_shop(db, cursor, shop_name):
         cursor.execute(sql)
         # get data
         data = cursor.fetchall()
-
-        if data is None:
-            print("No items found")
+        if len(data) == 0:
+            print("No items or shop found")
             return dict_result
+        print("\n-------Welcome to '%s'-------"%shop_name)
         table = PrettyTable(['Item_ID', 'Item_Name', 'Price', 'Item remaining', 'Classification', 'Description', 'Indications'])
 
         for i in data:
@@ -45,10 +45,6 @@ def get_items_in_a_shop(db, cursor, shop_name):
             }
         table.set_style(DEFAULT)
         print(table)
-
-        # print("\n----Items----")
-        # for i in range(0, len(data), 1):
-        #     print(data[i])
 
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
