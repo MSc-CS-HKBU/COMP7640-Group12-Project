@@ -2,13 +2,18 @@ import pymysql
 from prettytable import DEFAULT, PrettyTable
 
 def showAddProductPanel(db, cursor, shop_name):
-    print("\n----Products----")
+    # print("\n----Products----")
 
     # print("[1...] Enter product number to add it to the cart")
     # print("`. Back")
     # print("0. Exit")
-
+    # print("\nPlease enter item ID to add it to the cart")
+    print("\n")
     get_items_in_a_shop(db, cursor, shop_name)
+
+
+
+
 
     # while True:
     #     for i in range(len(products)):

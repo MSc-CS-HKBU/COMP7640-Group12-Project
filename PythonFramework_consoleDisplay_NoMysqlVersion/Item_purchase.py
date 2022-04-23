@@ -1,4 +1,4 @@
-import pymysql, random
+import pymysql, random, globals
 
 
 # purchase items in cart
@@ -17,7 +17,9 @@ def purchase_item_in_cart(db, cursor):
         # sql = "SELECT Item_Name,Price,Item_qty,Description,Keyword1,Keyword2 FROM items WHERE Item_Name = '%s' OR \
         # Keyword1 = '%s' OR Keyword2='%s'"%(option,option,option)
 
-        cart_items = [x.strip() for x in open('./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt')] # read all lines in txt into list
+        # './PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt'
+
+        cart_items = [x.strip() for x in open(globals.path_cartFile)] # read all lines in txt into list
 
         order_id = f"A{str(random.getrandbits(20))}" # generate A<number>, <number> is 20-bit integer (i.e. max 2^20 - 1)
         customer_id = 1 # hard coded, should change to dynamic with db later

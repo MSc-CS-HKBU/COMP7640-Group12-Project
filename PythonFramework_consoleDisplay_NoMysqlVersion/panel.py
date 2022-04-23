@@ -1,3 +1,4 @@
+from numpy import isin
 import Item_management
 import Item_search
 import Item_purchase
@@ -5,20 +6,21 @@ import Item_canceling
 import Shop_management
 import customer_operation
 import Shop_management
+import globals
 from connector import connetSql
 cursor, sqlConnect = connetSql('7640_proj')
 # Initialize user_name and user_id for tourists
 user_name = ''
 user_id = 0
 # Define the path for shopping cart
-path_cartFile = r"./cart.txt" # r"./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
+# path_cartFile = r"./cart.txt" # r"./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
 
 # ---</MAINPAGE>---
 def showLandingPage(user_name):
     while True:
         # CART
         cartFileReadAndUpdate = open(
-            path_cartFile, "r+")
+            globals.path_cartFile, "r+")
 
         productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
 
@@ -174,10 +176,44 @@ def showItempanel(user_name):
             print("0. Exit")
             option = input("Enter number to select option >> ")
             if option == "1":
+                
+                shop_name = input("Please input the shop name which you want to search: ")  
+
                 print("\n-------Items-------")
-                shop_name = input("Please input the shop name which you want to search: ")
-                print("Please enter item ID to add it to the cart")
-                Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
+                Item_management.showAddProductPanel(sqlConnect, cursor, shop_name)
+
+                while True:
+                    # show options
+                    print("\n\n-------Options-------")
+                    print("1. Add item to cart")
+                    # print("2. Enter Shop name")
+                    print("`. Back")
+                    print("0. Exit")                    
+                        
+                    option2 = input("Enter number to select option >> ")         
+                    if option2 == "1":
+                        item_id = input("Enter item ID >> ")
+                        while True: # To ensure number of item being int
+                            item_qty = input("Enter number of item >> ")
+                            if item_qty.isdigit() and int(item_qty)>0:
+                                break
+                            else:
+                                print("Invalid input for number of item (should be positive integer), please input again.")
+                        # TODO add to cart.txt
+                        item_qty = int(item_qty)
+                        Item_management.showAddProductPanel(sqlConnect, cursor, shop_name)
+                        print("\n Added to cart!")
+                        continue
+                    elif option2 == "`":
+                        showLandingPage(user_name)
+                        break
+                    elif option2 == "0": 
+                        closeShop(user_name)    
+                    else:
+                        print("\n[!] You've entered invalid character.")
+                        continue
+
+
                 continue 
             elif option == "`":
                 showLandingPage(user_name)
