@@ -1,7 +1,8 @@
 import pymysql
 
 
-def regiter(db, cursor):
+# register a new account
+def register(db, cursor):
     Name = input("Please enter your Name >> ")
     Password = input("Please enter your Password (at less 6 chars or number) >> ")
     Phone = input("Please enter your Phone number >> ")
@@ -45,6 +46,8 @@ def regiter(db, cursor):
         db.rollback()
     return
 
+
+# log in function, people cannot shop without a login
 def log_in(db, cursor):
     Name = input("Please enter your Name >> ")
     Password = input("Please enter your Password >> ")
@@ -67,13 +70,33 @@ def log_in(db, cursor):
     return data[0], data[1]
 
 
-def log_out(username):
-    print("Account %s have logged out"%username)
+# log out function, exit the current account to the visitor status
+def log_out(user_name):
+    print("Account %s have logged out"%user_name)
+    user_id = 0
+    user_name = ''
+    return user_id, user_name
 
 
+# delete account
 def close_account(db, cursor):
     Name = input("Please enter the Name >> ")
     Password = input("Please enter the Password >> ")
+
+
+    sql = "SELECT * FROM customer WHERE Name = '%s' AND Password = '%s'" % (Name, Password)
+    try:
+        # execute sql
+        cursor.execute(sql)
+        # get data
+        data = cursor.fetchone()
+        if data is None:
+            print('Name or Password incorrect')
+            return
+
+    except pymysql.Error as e:
+        print(e.args[0], e.args[1])
+
 
     sql = "DELETE FROM customer WHERE Name = '%s' AND Password = '%s'" % (Name, Password)
     try:
