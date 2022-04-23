@@ -7,7 +7,7 @@ from prettytable import DEFAULT
 # search items
 def search_item(db, cursor):
     option = input("Please enter what you want to search >> ")
-    sql = "SELECT Item_Name,Price,Item_qty,Classification,Description,Indications FROM items WHERE Item_Name = '%s' OR \
+    sql = "SELECT Item_ID, Item_Name,Price,Item_qty,Classification,Description,Indications FROM items WHERE Item_Name = '%s' OR \
     Classification = '%s' OR Indications='%s'"%(option,option,option)
     try:
         # execute sql
@@ -18,10 +18,10 @@ def search_item(db, cursor):
             print("Sorry, we do not have this item now, try another like Nin Jiom?")
             return
 
-        table = PrettyTable(['Item_Name','Price','Item remaining','Classification','Description','Indications'])
+        table = PrettyTable(['Item_ID','Item_Name','Price','Item remaining','Classification','Description','Indications'])
 
         for i in data:
-            table.add_row([i[0], i[1], i[2], i[3],i[4],i[5]])
+            table.add_row([i[0], i[1], i[2], i[3],i[4],i[5],i[6]])
         table.set_style(DEFAULT)
         print(table)
 
