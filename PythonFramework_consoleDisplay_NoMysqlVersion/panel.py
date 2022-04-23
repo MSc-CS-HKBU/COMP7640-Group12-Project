@@ -536,12 +536,15 @@ def purchaseOrderCartPanel(user_name):
 # ---</Cancel order>---
 def cancelOrderPanel(user_name):
     while True:
-        print("-------Cancle orders-------")
+        print("-------Cancel orders-------")
+
+        # Show order lsit
+
         print("y. Yes")
         print("n. No")
         print("`. Back")
         print("0. Exit")
-        option = input("Confirm to cancle order [y/n]>> ")
+        option = input("Confirm to cancel order [y/n]>> ")
         if option == "y":
             print("\n-------Orders canceling-------")
             Order_canceling.cancel_user_all_orders(sqlConnect, cursor,user_id)
