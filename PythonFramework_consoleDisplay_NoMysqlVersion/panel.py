@@ -267,7 +267,7 @@ def purchaseOrderCartPanel(user_name):
         print("0. Exit")
         option = input("Confirm to place order [y/n]>> ") 
         if option == "y":
-            Item_purchase.purchase_item_in_cart(sqlConnect, cursor)
+            Item_purchase.purchase_item_in_cart(sqlConnect, cursor, 1)
             print("\n------------------------------")
             print("Orders have been confirmed")
             print("------------------------------")
