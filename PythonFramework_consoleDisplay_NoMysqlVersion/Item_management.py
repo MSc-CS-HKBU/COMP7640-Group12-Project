@@ -28,7 +28,7 @@ def get_items_in_a_shop(db, cursor):
         table = PrettyTable(['Item_Name', 'Price', 'Item remaining', 'Classification', 'Description', 'Indications'])
 
         for i in data:
-            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5]])
+            table.add_row([i[0], i[1], int(i[2]), i[3], i[4], i[5]])
         table.set_style(DEFAULT)
         print(table)
 
