@@ -2,7 +2,7 @@ from numpy import isin
 import Item_management
 import Item_search
 import Item_purchase
-import Item_canceling
+import Order_canceling
 import Shop_management
 import customer_operation
 import Shop_management
@@ -180,7 +180,7 @@ def showItempanel(user_name):
                 shop_name = input("Please input the shop name which you want to search: ")  
 
                 print("\n-------Items-------")
-                Item_management.showAddProductPanel(sqlConnect, cursor, shop_name)
+                items = Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
 
                 while True:
                     # show options
@@ -201,7 +201,9 @@ def showItempanel(user_name):
                                 print("Invalid input for number of item (should be positive integer), please input again.")
                         # TODO add to cart.txt
                         item_qty = int(item_qty)
-                        Item_management.showAddProductPanel(sqlConnect, cursor, shop_name)
+                        # for item in items:
+                        #     if item['Item_ID'] == item_id
+                        Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
                         print("\n Added to cart!")
                         continue
                     elif option2 == "`":
@@ -297,7 +299,7 @@ def cancelOrderPanel(user_name):
         option = input("Confirm to cancle order [y/n]>> ") 
         if option == "y":
             print("\n-------Orders canceling-------")
-            Item_canceling.cancel_order(sqlConnect, cursor,user_id)
+            Order_canceling.cancel_whole_order(sqlConnect, cursor,user_id)
             showLandingPage(user_name)
             continue
         elif option == "n":

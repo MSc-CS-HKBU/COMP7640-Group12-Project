@@ -1,5 +1,29 @@
 import pymysql, random, globals
 
+def load_cart(path_cartFile):
+    # in progress
+    cart_items = [x.strip() for x in open(globals.path_cartFile)] # read all lines in txt into list, e.g. P005:Kobayashi antipyretic patch:$20
+
+    order_id = f"A{str(random.getrandbits(20))}" # generate A<number>, <number> is 20-bit integer (i.e. max 2^20 - 1)
+    customer_id = 1 # hard coded, should change to dynamic with db later
+
+    dict_cart_items = dict()
+    for item in cart_items:
+        splitted_item = item.split(":")
+        item_id = splitted_item[0]
+        item_name = splitted_item[1]
+        item_price = float(splitted_item[2].replace('$',''))
+        if item_id in dict_cart_items:
+            dict_cart_items[item_id]["count"] += 1
+            dict_cart_items[item_id]["total_price"] += item_price
+        else:
+            dict_cart_items[item_id] = {
+                "name": item_name,
+                "count": 1,
+                "total_price": item_price
+            }    
+
+
 
 # purchase items in cart
 def purchase_item_in_cart(db, cursor):
@@ -19,7 +43,7 @@ def purchase_item_in_cart(db, cursor):
 
         # './PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt'
 
-        cart_items = [x.strip() for x in open(globals.path_cartFile)] # read all lines in txt into list
+        cart_items = [x.strip() for x in open(globals.path_cartFile)] # read all lines in txt into list, e.g. P005:Kobayashi antipyretic patch:$20
 
         order_id = f"A{str(random.getrandbits(20))}" # generate A<number>, <number> is 20-bit integer (i.e. max 2^20 - 1)
         customer_id = 1 # hard coded, should change to dynamic with db later
@@ -29,7 +53,7 @@ def purchase_item_in_cart(db, cursor):
             splitted_item = item.split(":")
             item_id = splitted_item[0]
             item_name = splitted_item[1]
-            item_price = float(splitted_item[2])
+            item_price = float(splitted_item[2].replace('$',''))
             if item_id in dict_cart_items:
                 dict_cart_items[item_id]["count"] += 1
                 dict_cart_items[item_id]["total_price"] += item_price

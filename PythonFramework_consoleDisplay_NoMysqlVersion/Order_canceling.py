@@ -1,9 +1,10 @@
 import pymysql
+
 import Item_search
 
 
 # cancel item
-def cancel_item(db, cursor):
+def cancel_order_item(db, cursor):
     # in progress
     option = input("Please enter what you want to search >> ")
     sql = "SELECT Item_Name,Price,Item_qty,Description,Keyword1,Keyword2 FROM items WHERE Item_Name = '%s' OR \
@@ -35,7 +36,7 @@ def cancel_item(db, cursor):
 
 
 # cancel entire order
-def cancel_order(db, cursor, user_id):
+def cancel_whole_order(db, cursor, user_id):
     sql = "DELETE FROM orders WHERE Customer_ID = %s" % user_id
     try:
         # 执行sql语句
