@@ -73,7 +73,7 @@ def cancel_order_single_item(db, cursor, user_id, order_id, item_id):
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
         db.rollback()
-    print("Order cancel, get something!")
+    print("\nOrder's item cancelled if exists")
     # come back to first page
     return
 
@@ -89,7 +89,7 @@ def cancel_user_single_order(db, cursor, user_id, order_id):
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
         db.rollback()
-    print("Order cancel, get something!")
+    print("\nOrder cancelled if exists")
     # come back to first page
     return
 
@@ -105,6 +105,6 @@ def cancel_user_all_orders(db, cursor, user_id):
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
         db.rollback()
-    print("Order cancel, get something!")
+    print("\nAll current user order cancelled, if exists")
     # come back to first page
     return

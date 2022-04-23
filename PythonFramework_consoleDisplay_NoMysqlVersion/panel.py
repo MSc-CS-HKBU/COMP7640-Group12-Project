@@ -569,7 +569,7 @@ def cancelOrderPanel(user_name):
         option = input("Enter number to select option >> ")
         if option == "1":
             print("\n-------Orders canceling-------")
-            print("`. Back")
+            print("\n`. Back")
             order_id = input("Enter character to select option or input order ID >> ")
             if order_id != '`':
                 Order_canceling.cancel_user_single_order(sqlConnect, cursor, 1, order_id)#user_name
@@ -577,7 +577,7 @@ def cancelOrderPanel(user_name):
             continue
         elif option == "2":
             print("\n-------Order item(s) canceling-------")
-            print("`. Back")
+            print("\n`. Back")
             order_id = input("Enter character to select option or input order ID to view content of order >> ")
             if order_id == '`':
                 continue
@@ -585,7 +585,7 @@ def cancelOrderPanel(user_name):
             # Show order content
             Order_canceling.get_items_of_order(sqlConnect, cursor, 1, order_id)#user_name
             
-            print("`. Back")            
+            print("\n`. Back")            
             item_id = input("Enter character to select option or input item ID going to be removed >> ")
             if order_id != '`':
                 Order_canceling.cancel_order_single_item(sqlConnect, cursor,1, order_id, item_id)#user_name
