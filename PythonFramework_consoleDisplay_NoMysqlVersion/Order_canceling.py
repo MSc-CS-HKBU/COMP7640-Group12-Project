@@ -6,6 +6,7 @@ import Item_search
 # get items of an order
 def get_items_of_order(db, cursor, user_id, order_id):
     sql = "SELECT Item_ID, Item_Name, Item_qty, Price FROM orders WHERE Customer_ID='%s' AND Order_ID='%s'" % (user_id, order_id)
+    data = []
     try:
         # execute sql
         cursor.execute(sql)
@@ -13,7 +14,7 @@ def get_items_of_order(db, cursor, user_id, order_id):
         data = cursor.fetchall()
 
         if len(data) == 0:
-            return
+            return data
 
 
         table = PrettyTable(['Item_ID', 'Item_Name', 'Item_qty', 'Price'])
@@ -29,7 +30,7 @@ def get_items_of_order(db, cursor, user_id, order_id):
     except pymysql.Error as e:
         print(e.args[0], e.args[1])
 
-    return
+    return data
 
 
 # get order list
