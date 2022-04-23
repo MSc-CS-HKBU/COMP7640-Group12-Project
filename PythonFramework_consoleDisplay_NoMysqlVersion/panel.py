@@ -556,7 +556,7 @@ def purchaseOrderCartPanel(user_name):
 # ---</Cancel order>---
 def cancelOrderPanel(user_name):
     while True:
-        print("-------Cancel orders-------")
+        print("\n-------Cancel orders-------")
 
         # Show order list
         Order_canceling.get_orders(sqlConnect, cursor, 1)#user_name
@@ -569,21 +569,26 @@ def cancelOrderPanel(user_name):
         option = input("Enter number to select option >> ")
         if option == "1":
             print("\n-------Orders canceling-------")
-            order_id = input("Enter order ID >> ")
-            Order_canceling.cancel_user_single_order(sqlConnect, cursor, 1, order_id)#user_name
+            print("`. Back")
+            order_id = input("Enter character to select option or input order ID >> ")
+            if order_id != '`':
+                Order_canceling.cancel_user_single_order(sqlConnect, cursor, 1, order_id)#user_name
             # showLandingPage(user_name)
             continue
         elif option == "2":
             print("\n-------Order item(s) canceling-------")
-            order_id = input("Enter order ID to view content of order >> ")
+            print("`. Back")
+            order_id = input("Enter character to select option or input order ID to view content of order >> ")
+            if order_id == '`':
+                continue
 
             # Show order content
             Order_canceling.get_items_of_order(sqlConnect, cursor, 1, order_id)#user_name
             
-
-            item_id = input("Enter item ID >> ")
-
-            Order_canceling.cancel_order_single_item(sqlConnect, cursor,1, order_id, item_id)#user_name
+            print("`. Back")            
+            item_id = input("Enter character to select option or input item ID going to be removed >> ")
+            if order_id != '`':
+                Order_canceling.cancel_order_single_item(sqlConnect, cursor,1, order_id, item_id)#user_name
 
             continue
         elif option == "`":
