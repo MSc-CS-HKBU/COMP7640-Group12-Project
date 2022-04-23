@@ -1,13 +1,14 @@
 from numpy import isin
+
+import customer_operation
+import globals
 import Item_management
-import Item_search
 import Item_purchase
+import Item_search
 import Order_canceling
 import Shop_management
-import customer_operation
-import Shop_management
-import globals
 from connector import connetSql
+
 cursor, sqlConnect = connetSql('7640_proj')
 # Initialize user_name and user_id for tourists
 user_name = ''
@@ -180,7 +181,7 @@ def showItempanel(user_name):
                 shop_name = input("Please input the shop name which you want to search: ")  
 
                 print("\n-------Items-------")
-                items = Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
+                shop_items = Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
 
                 while True:
                     # show options
@@ -192,19 +193,35 @@ def showItempanel(user_name):
                         
                     option2 = input("Enter number to select option >> ")         
                     if option2 == "1":
-                        item_id = input("Enter item ID >> ")
-                        while True: # To ensure number of item being int
-                            item_qty = input("Enter number of item >> ")
-                            if item_qty.isdigit() and int(item_qty)>0:
+                        while True: # To ensure item ID be valid
+                            item_id = input("Enter item ID >> ")
+                            if item_id in shop_items:
                                 break
                             else:
-                                print("Invalid input for number of item (should be positive integer), please input again.")
-                        # TODO add to cart.txt
-                        item_qty = int(item_qty)
-                        # for item in items:
-                        #     if item['Item_ID'] == item_id
-                        Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
-                        print("\n Added to cart!")
+                                print("Please input valid item ID.")
+                        while True: # To ensure number of item being int
+                            item_qty = input("Enter number of item >> ")
+                            if item_qty.isdigit() and int(item_qty)>=0:
+                                item_qty = int(item_qty)
+                                cart = Item_purchase.load_cart(globals.path_cartFile)
+                                cart_item_qty = cart[item_id]['count'] if item_id in cart else 0
+                                if (cart_item_qty+item_qty) <= shop_items[item_id]['Item remaining']:
+                                    # save to cart.txt
+                                    for i in range(item_qty):
+                                        Item_purchase.write_cart(item_id, shop_items[item_id])  
+                                
+                                    shop_items = Item_management.get_items_in_a_shop(sqlConnect, cursor, shop_name)
+
+                                    if item_qty > 0:
+                                        print("\n Added to cart!")   
+                                    break                                     
+                                else:
+                                    print("Number of the requested item is more than that in stock of shop, please request fewer number of the item")                              
+                            else:
+                                print("Invalid input for number of item (should be 0 or positive integer), please input again.")
+                        
+
+
                         continue
                     elif option2 == "`":
                         showLandingPage(user_name)

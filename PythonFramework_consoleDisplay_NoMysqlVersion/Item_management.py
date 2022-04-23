@@ -52,7 +52,7 @@ def get_items_in_a_shop(db, cursor, shop_name):
     # sql = "SELECT * FROM items i, shop s where i.Shop_ID = s.Shop_ID and s.Shop_Name = '%s'"%(shop_name)
     # sql = "SELECT * FROM items where Shop_ID =1"
     
-    list_result = []
+    dict_result = dict()
 
     try:
         # execute sql
@@ -62,20 +62,28 @@ def get_items_in_a_shop(db, cursor, shop_name):
 
         if data is None:
             print("No items found")
-            return list_result
+            return dict_result
         table = PrettyTable(['Item_ID', 'Item_Name', 'Price', 'Item remaining', 'Classification', 'Description', 'Indications'])
 
         for i in data:
             table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
-            list_result.append({
-                'Item_ID': i[0],
+            # dict_result.append({
+            #     'Item_ID': i[0],
+            #     'Item_Name': i[1],
+            #     'Price': i[2],
+            #     'Item remaining': i[3],
+            #     'Classification': i[4],
+            #     'Description': i[5],
+            #     'Indications': i[6]                
+            # })
+            dict_result[i[0]] = {
                 'Item_Name': i[1],
                 'Price': i[2],
                 'Item remaining': i[3],
                 'Classification': i[4],
                 'Description': i[5],
-                'Indications': i[6]                
-            })
+                'Indications': i[6]                   
+            }
         table.set_style(DEFAULT)
         print(table)
 
@@ -87,7 +95,7 @@ def get_items_in_a_shop(db, cursor, shop_name):
         print(e.args[0], e.args[1])
         # rollback when wrong happen
         db.rollback()
-    return list_result
+    return dict_result
 
 
 # insert new item
