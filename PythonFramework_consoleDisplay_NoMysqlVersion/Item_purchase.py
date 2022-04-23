@@ -69,7 +69,7 @@ def purchase_item_in_cart(db, cursor, customer_id):
             sql = f"INSERT INTO orders (Order_ID, Customer_ID, Item_ID, Item_Name, Item_qty, Price) VALUES ('{order_id}', {customer_id}, '{item_id}', '{dict_cart_items[item_id]['name']}', {dict_cart_items[item_id]['count']}, {dict_cart_items[item_id]['total_price']})"
             # print(sql)
             try:
-                # 执行sql语句
+                # execute SQL
                 cursor.execute(sql)
                 # push to database execute
                 db.commit()
