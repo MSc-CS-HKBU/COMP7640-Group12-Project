@@ -61,15 +61,15 @@ def insert_item(db, cursor):
     item={}
     for i in Item_column:
         if i == 'Item_ID':
-            print("please begin form 'p',such as p01")
+            print("please begin form 'P',such as P01")
         content = input('%s='%i,)
         item.update({'%s'%i: content})
-    print(item)
+    # print(item)
     sql = "INSERT INTO items VALUES('%s','%s',%s,'%s', %s, \
     '%s', '%s', '%s')"% \
           (item['Item_ID'], item['Item_Name'], item['Price'], item['Shop_ID'], item['Item_qty'], \
           item['Classification'], item['Description'], item['Indications'])
-    print("sql=",sql)
+    # print("sql=",sql)
 
     try:
         # execute sql
