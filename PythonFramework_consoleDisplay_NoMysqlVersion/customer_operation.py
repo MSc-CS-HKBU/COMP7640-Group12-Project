@@ -24,7 +24,7 @@ def register(db, cursor):
         print(e.args[0], e.args[1])
 
     if len(Password) < 6:
-        print('Password to short!')
+        print('Password too short!')
         return
     elif "@" not in Email:
         print('invalid Email address!')

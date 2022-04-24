@@ -388,7 +388,7 @@ def showRemoveProductPanel(dict_cart_items, user_name):
         cartFileLines = cartFileReadAndUpdate.readlines()
         cartFileLinesLength = len(cartFileLines)
 
-        print("\n-----Remove Products from Cart-----")
+        print("\n-----Remove Item(s) from Cart-----")
 
         print("Please select option or enter item ID to remove it from the cart")
         print('`. Back')
@@ -421,7 +421,7 @@ def showRemoveProductPanel(dict_cart_items, user_name):
 
             print("\n----------------------------------------")
             print("SUCCESS")
-            print("Product removed")
+            print("Item(s) removed")
             print("----------------------------------------\n")
         elif option == "`":
             showLandingPage(user_name)
@@ -467,9 +467,9 @@ def cartPanel(user_name):
         # print('`. Back')
         # print('0. Exit')
 
-        print("<>---Products in Cart---<>")
+        print("<>---Item(s) in Cart---<>")
         if cartFileLinesLength == 0:
-            print("No products found.")
+            print("No item found.")
         elif cartFileLinesLength != 0:
             # for i in range(cartFileLinesLength):
             #     cart_item = cartFileLines[i].rstrip()
@@ -497,7 +497,7 @@ def cartPanel(user_name):
         print("\n\n-------Options-------")
         if cartFileLinesLength != 0:
             print('1. Order')
-            print('-. Remove product')
+            print('-. Remove item(s)')
         print('`. Back')
         print('0. Exit')            
 
