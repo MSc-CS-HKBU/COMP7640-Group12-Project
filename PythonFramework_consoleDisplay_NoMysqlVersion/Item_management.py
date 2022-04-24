@@ -55,7 +55,6 @@ def get_items_in_a_shop(db, cursor, shop_name):
 
 # insert new item
 def insert_item(db, cursor):
-    print("\n----Please enter what you want to add----")
     Item_column=(
         'Item_ID','Item_Name','Price','Shop_ID','Item_qty','Classification','Description','Indications')
     item={}
