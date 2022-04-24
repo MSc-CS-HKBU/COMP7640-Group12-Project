@@ -89,6 +89,8 @@ def showLandingPage(user_name):
         elif option == "*":
             deleteAccountPanel(user_name)
         elif option == "0":
+            # clear cart
+            open(globals.path_cartFile, 'w').close()            
             closeShop(user_name)
         else:
             print("\n[!] You've entered invalid character.")
