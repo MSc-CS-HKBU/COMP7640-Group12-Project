@@ -608,12 +608,14 @@ def cancelOrderPanel(user_name):
         elif option == "2":
             print("\n-------Order item(s) canceling-------")
 
+            back_pressed = False
             while True:
                 print("\n-------Options-------")
                 print("`. Back")
                 order_id = input("Enter character to select option or input order ID to view content of order >> ")
                 if order_id == '`':
-                    continue
+                    back_pressed = True
+                    break
 
                 # Show order content
                 items_order = Order_canceling.get_items_of_order(sqlConnect, cursor, user_id, order_id)#user_name
@@ -622,6 +624,9 @@ def cancelOrderPanel(user_name):
                     break
                 else:
                     print("\nInvalid order ID, please try again.")
+            
+            if back_pressed:
+                continue
             
             print("\n-------Options-------")
             print("`. Back")            
