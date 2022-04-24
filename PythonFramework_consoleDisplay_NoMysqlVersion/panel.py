@@ -626,7 +626,7 @@ def logoutPanel(user_name):
     global user_id
     while True:
         print("\n-------Log out-------")
-        print("y. Yes")
+        print("y. Yes ([!] CART WILL BE EMPTIED)")
         print("n. No")
         print("`. Back")
         print("0. Exit")
@@ -634,6 +634,8 @@ def logoutPanel(user_name):
         if option == "y":
             print("\n-------Log in again to confirm-------")
             user_id, user_name = customer_operation.log_out(user_name)
+            # clear cart
+            open(globals.path_cartFile, 'w').close()
             showLandingPage(user_name)
             continue
         elif option == "n":
