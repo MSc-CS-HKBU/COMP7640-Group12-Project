@@ -61,7 +61,7 @@ def insert_item(db, cursor):
     item={}
     for i in Item_column:
         if i == 'Item_ID':
-            print("please begin form 'p',such as p01")
+            print("please begin form 'P',such as P01")
         content = input('%s='%i,)
         item.update({'%s'%i: content})
     # print(item)
