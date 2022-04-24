@@ -21,4 +21,5 @@ m. Management(Shop/Item)   --> Add a shop/item in to database. \
 *. Delete Account          --> Delete a customer in the database. \
 0.Exit                     --> Exit the system.
 
-
+Notes: \
+1. Please login before placing and canceling orders
