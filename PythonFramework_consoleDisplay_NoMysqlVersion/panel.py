@@ -534,22 +534,41 @@ def purchaseOrderCartPanel(user_name):
 
     while True:
         print("-------Purchase cart items-------")
-        print("y. Yes")
-        print("n. No")
+        cart_not_empty = len([x.strip() for x in open(globals.path_cartFile)])>0 
+
+        if cart_not_empty:
+            print("y. Yes")
+            print("n. No")
+        else:
+            print("Cart is empty, please add item(s) to cart before purchasing")
+
         print("`. Back")
         print("0. Exit")
-        option = input("Confirm to place order [y/n]>> ")
+        
+        if cart_not_empty:
+            option = input("Confirm to place order [y/n]>> ")
+        else:
+            option = input("Enter character to select option>> ")
+        
         if option == "y":
-            Item_purchase.purchase_items_in_cart(sqlConnect, cursor, user_id) #user_name
-            print("\n------------------------------")
-            print("Orders have been confirmed")
-            print("------------------------------")
-            print("Thank you very much for shopping in our shop.\nYour items will be delivered in up to 3 days.")
-            print("------------------------------\n")
-            showLandingPage(user_name)
+            if cart_not_empty:
+                Item_purchase.purchase_items_in_cart(sqlConnect, cursor, user_id) #user_name
+                print("\n------------------------------")
+                print("Orders have been confirmed")
+                print("------------------------------")
+                print("Thank you very much for shopping in our shop.\nYour items will be delivered in up to 3 days.")
+                print("------------------------------\n")
+                showLandingPage(user_name)
+            else:
+                print("\n[!] You've entered invalid character.\n")
+
             continue
         elif option == "n":
-            showLandingPage(user_name)
+            if cart_not_empty:
+                showLandingPage(user_name)
+            else:
+                print("\n[!] You've entered invalid character.\n")
+            
             continue
         elif option == "`":
             showLandingPage(user_name)
@@ -557,7 +576,7 @@ def purchaseOrderCartPanel(user_name):
         elif option == "0":
             closeShop(user_name)
         else:
-            print("\n[!] You've entered invalid character.")
+            print("\n[!] You've entered invalid character.\n")
             continue
 
 
