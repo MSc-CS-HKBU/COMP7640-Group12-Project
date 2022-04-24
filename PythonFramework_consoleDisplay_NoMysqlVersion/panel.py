@@ -48,7 +48,10 @@ def showLandingPage(user_name):
 
         print("7. Place order")
         print("8. Cancel order")
-        print("9. Logout")
+
+        if user_name != '': # ie logged in
+            print("9. Logout")
+                
         print("m. Management(Shop/Item)")
         print("*. Delete Account")
         print("0. Exit")
@@ -79,7 +82,8 @@ def showLandingPage(user_name):
                 print("\n[!] Please login before placing order")
             continue            
         elif option == "9":
-            logoutPanel(user_name)
+            if user_name != '':
+                logoutPanel(user_name)
         elif option == "m":
             managementPanel(user_name)
         elif option == "*":
