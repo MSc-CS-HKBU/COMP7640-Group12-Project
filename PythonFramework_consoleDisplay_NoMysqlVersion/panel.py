@@ -598,7 +598,7 @@ def cancelOrderPanel(user_name):
         option = input("Enter number to select option >> ")
         if option == "1":
             print("\n-------Orders canceling-------")
-            print("\n-------Options-------")
+            print("-------Options-------")
             print("`. Back")
             order_id = input("Enter character to select option or input order ID >> ")
             if order_id != '`':
@@ -610,7 +610,7 @@ def cancelOrderPanel(user_name):
 
             back_pressed = False
             while True:
-                print("\n-------Options-------")
+                print("-------Options-------")
                 print("`. Back")
                 order_id = input("Enter character to select option or input order ID to view content of order >> ")
                 if order_id == '`':
@@ -628,7 +628,7 @@ def cancelOrderPanel(user_name):
             if back_pressed:
                 continue
             
-            print("\n-------Options-------")
+            print("-------Options-------")
             print("`. Back")            
             item_id = input("Enter character to select option or input item ID going to be removed >> ")
             if order_id != '`':
