@@ -26,21 +26,21 @@ def showShops(db, cursor):
     #     print("\n[!] You've entered invalid character.")
 
 
-def insert_shop(name, addr, rating, db, cursor):
+def insert_shop(key, name, addr, rating, db, cursor):
     # print("\n----Please enter shop you want to add----")
 
-    key = ''+str(random.getrandbits(20))
+    # key = ''+str(random.getrandbits(20))
 
     sql = "INSERT INTO shop VALUES('%s','%s','%s',%s)" % \
           (key, name, addr, rating)
-    print("sql=", sql)
+    # print("sql=", sql)
 
     try:
         # execute sql command
         cursor.execute(sql)
         # push to database execute
         db.commit()
-        print('insert successfully')
+        print('Insert successfully')
 
     except pymysql.Error as e:
         print(e.args[0], e.args[1])

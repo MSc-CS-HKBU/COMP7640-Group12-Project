@@ -691,9 +691,10 @@ def managementPanel(user_name):
             option = input("Enter number to select option >> ")
             if option == "+":
                 print("\n-------Please enter info of shop for shop adding-------")
+                shop_id = input("Enter shop ID >> ")
                 name = input("Enter shop name >> ")
                 addr = input("Enter shop address >> ")
-                Shop_management.insert_shop(name, addr, 0, sqlConnect, cursor)
+                Shop_management.insert_shop(shop_id, name, addr, 0, sqlConnect, cursor)
                 continue
             elif option == "`":
                 continue
