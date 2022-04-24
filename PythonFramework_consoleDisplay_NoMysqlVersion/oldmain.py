@@ -58,8 +58,8 @@ cursor, sqlConnect = connetSql('7640_proj')
 
 # ---</MAINPAGE>---
 
-path_authFile = r"./PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt"
-path_cartFile = r"./PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
+path_authFile = r"../PythonFramework_consoleDisplay_NoMysqlVersion/authentication.txt"
+path_cartFile = r"../PythonFramework_consoleDisplay_NoMysqlVersion/cart.txt"
 
 
 def showLandingPage():

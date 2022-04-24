@@ -8,7 +8,7 @@ def showShops(db, cursor):
     results = cursor.fetchall()
     # print("\n----Items----")
     # print("`. Back")
-    # print("0. Exit")    
+    # print("0. Exit")
     for row in results:
         sname = row[0]
         saddr = row[1]
@@ -23,19 +23,20 @@ def showShops(db, cursor):
     #     # showLandingPage()
     #     return
     # else:
-    #     print("\n[!] You've entered invalid character.")   
+    #     print("\n[!] You've entered invalid character.")
+
 
 def insert_shop(name, addr, rating, db, cursor):
     # print("\n----Please enter shop you want to add----")
-    
+
     key = ''+str(random.getrandbits(20))
 
     sql = "INSERT INTO shop VALUES('%s','%s','%s',%s)" % \
           (key, name, addr, rating)
-    print("sql=",sql)
+    print("sql=", sql)
 
     try:
-        # 执行sql语句
+        # execute sql command
         cursor.execute(sql)
         # push to database execute
         db.commit()
@@ -56,5 +57,3 @@ def insert_shop(name, addr, rating, db, cursor):
     #     return
     # else:
     #     print("\n[!] You've entered invalid character.")
-
-

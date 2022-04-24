@@ -1,4 +1,4 @@
-from numpy import isin
+from prettytable import DEFAULT, PrettyTable
 
 import customer_operation
 import globals
@@ -46,8 +46,8 @@ def showLandingPage(user_name):
         else:
             print(f"6. Cart [{productsInCartQuantity}]")
 
-        print("7. Order")
-        print("8. Cancle order")
+        print("7. Place order")
+        print("8. Cancel order")
         print("9. Logout")
         print("m. Management(Shop/Item)")
         print("*. Delete Account")
@@ -56,18 +56,28 @@ def showLandingPage(user_name):
         if option == "1":
             RegistrationPanel()
         elif option == "2":
-            loginPanel()
+            user_id, user_name=loginPanel()
         elif option == "3":
             showShopPanel(user_name)
         elif option == "4":
             showItempanel(user_name)
         elif option == "5":
             searchItemsPanel(user_name)
-        # cart place in here 6
+        elif option == "6":
+            # cart place in here 6
+            cartPanel(user_name)        
         elif option == "7":
-            purchaseOrderCartPanel(user_name)
+            if user_name != '':
+                purchaseOrderCartPanel(user_name)
+            else:
+                print("\n[!] Please login before placing order")
+            continue
         elif option == "8":
-            cancelOrderPanel(user_name)
+            if user_name != '':
+                cancelOrderPanel(user_name)
+            else:
+                print("\n[!] Please login before placing order")
+            continue            
         elif option == "9":
             logoutPanel(user_name)
         elif option == "m":
@@ -132,7 +142,8 @@ def loginPanel():
             print("\n-------Login-------")
             user_id, user_name = customer_operation.log_in(sqlConnect, cursor)
             showLandingPage(user_name)
-            break
+            # add return values user_id and user_name
+            return user_id, user_name
         elif option == "`":
             showLandingPage()
             break
@@ -292,6 +303,8 @@ def searchItemsPanel(user_name):
         if option == "1":
             item_keyword = input("Please input the item name or keywords which you want to search: ")
             search_item_result = Item_search.search_item(sqlConnect, cursor, item_keyword)
+            if len(search_item_result) == 0:
+                continue
             while True:
                 # show options
                 print("\n\n-------Options-------")
@@ -364,12 +377,154 @@ def searchItemsPanel(user_name):
         else:
             print("\n[!] You've entered invalid character.\n")
             continue
-
-
 # ---</Search Items>---
+
+# ---</Cart>---
+def showRemoveProductPanel(dict_cart_items, user_name):
+    while True:
+        cartFileReadAndUpdate = open(
+            globals.path_cartFile, "r+")
+        cartFileLines = cartFileReadAndUpdate.readlines()
+        cartFileLinesLength = len(cartFileLines)
+
+        print("\n-----Remove Products from Cart-----")
+
+        print("Please select option or enter item ID to remove it from the cart")
+        print('`. Back')
+        print("0. Exit")
+
+        # for i in range(cartFileLinesLength):
+        #     print(f'{i + 1} - {cartFileLines[i].rstrip()}')
+
+        option = input("Enter specific character to select option or enter item ID >> ")
+
+
+        if option in dict_cart_items:
+
+            # cartFileLinesUpdated = cartFileLines[:int(
+            #     option) - 1] + cartFileLines[int(option):]
+            
+            cartFileLines_copied = cartFileLines.copy()
+            # print((cartFileLines_copied))
+            i = 0
+            while i < len(cartFileLines_copied):
+                if cartFileLines_copied[i].startswith(option):
+                    del cartFileLines_copied[i]
+                    i -= 1
+                i += 1
+
+            cartFileWrite = open(
+                globals.path_cartFile, "w")
+            cartFileWrite.writelines(cartFileLines_copied)
+            cartFileWrite.close()
+
+            print("\n----------------------------------------")
+            print("SUCCESS")
+            print("Product removed")
+            print("----------------------------------------\n")
+        elif option == "`":
+            showLandingPage(user_name)
+            return
+        elif option == "0":
+            closeShop(user_name) 
+        else:
+            print("\n[!] You've entered invalid character.")
+            continue
+
+def cartPanel(user_name):
+    # while True:
+    #     print("\n-------Searching Items-------")
+    #     print("1. Search items")
+    #     print("`. Back")
+    #     print("0. Exit")
+    #     option = input("Enter number to select option >> ")
+    #     if option == "1":
+    #         print("\n-------Searching Result-------")
+    #         Item_search.search_item(sqlConnect, cursor)
+    #         continue
+    #     elif option == "`":
+    #         showLandingPage(user_name)
+    #         break
+    #     elif option == "0":
+    #         closeShop(user_name)
+    #     else:
+    #         print("\n[!] You've entered invalid character.\n")
+    #         continue
+
+    while True:
+        cartFileReadAndUpdate = open(
+            globals.path_cartFile, "r+")
+        cartFileLines = cartFileReadAndUpdate.readlines()
+        cartFileLinesLength = len(cartFileLines)
+
+        dict_cart_items = Item_purchase.load_cart(globals.path_cartFile)
+
+        print("\n-----Cart-----")
+        # if cartFileLinesLength != 0:
+        #     print('1. Order')
+        #     print('-. Remove product')
+        # print('`. Back')
+        # print('0. Exit')
+
+        print("<>---Products in Cart---<>")
+        if cartFileLinesLength == 0:
+            print("No products found.")
+        elif cartFileLinesLength != 0:
+            # for i in range(cartFileLinesLength):
+            #     cart_item = cartFileLines[i].rstrip()
+            #     # Latest version of cart file
+            #     splitted = cart_item.split(":")
+            #     item_id = splitted[0]
+            #     cart_item = splitted[1]
+            #     item_price = splitted[2].replace('$','')
+            #     print(f'<> {cart_item}')
+
+            # "name": item_name,
+            # "count": 1,
+            # "total_price": item_price       
+            #      
+            table = PrettyTable(['Item_ID', 'Item_Name', 'Quantity', 'Price'])
+
+            for key in dict_cart_items:
+                table.add_row([key, dict_cart_items[key]['name'], dict_cart_items[key]['count'], dict_cart_items[key]['total_price']])
+
+            table.set_style(DEFAULT)
+            print(table)                
+
+            print(f"<>---Total Price: ${Item_purchase.checkTotalAmountOfProductsInCart()}---<>")
+
+        print("\n\n-------Options-------")
+        if cartFileLinesLength != 0:
+            print('1. Order')
+            print('-. Remove product')
+        print('`. Back')
+        print('0. Exit')            
+
+        option = input("Your choice >> ")
+        if option == "0":
+            closeShop(user_name)            
+        elif option == "`":
+            showLandingPage(user_name)
+            return
+        elif option == "1" and cartFileLinesLength != 0:
+            # showOrderPanel("cart")
+            if user_name != '':
+                purchaseOrderCartPanel(user_name) #user_name
+                return
+            else:
+                print("\n[!] Please login before placing order")
+                showLandingPage(user_name)
+                return
+        elif option == "-" and cartFileLinesLength != 0:
+            showRemoveProductPanel(dict_cart_items, user_name)
+            return
+        else:
+            print("\n[!] You've entered invalid character.")        
+# ---</Cart>---
 
 # ---</Order>---
 def purchaseOrderCartPanel(user_name):
+
     while True:
         print("-------Purchase cart items-------")
         print("y. Yes")
@@ -378,7 +533,7 @@ def purchaseOrderCartPanel(user_name):
         print("0. Exit")
         option = input("Confirm to place order [y/n]>> ")
         if option == "y":
-            Item_purchase.purchase_items_in_cart(sqlConnect, cursor, 1)
+            Item_purchase.purchase_items_in_cart(sqlConnect, cursor, user_name) #user_name
             print("\n------------------------------")
             print("Orders have been confirmed")
             print("------------------------------")
@@ -404,19 +559,50 @@ def purchaseOrderCartPanel(user_name):
 # ---</Cancel order>---
 def cancelOrderPanel(user_name):
     while True:
-        print("-------Cancle orders-------")
-        print("y. Yes")
-        print("n. No")
+        print("\n-------Cancel orders-------")
+
+        # Show order list
+        Order_canceling.get_orders(sqlConnect, cursor, user_name)#user_name
+
+
+        print("1. Cancel order")
+        print("2. Cancel item(s) in order")
         print("`. Back")
         print("0. Exit")
-        option = input("Confirm to cancle order [y/n]>> ")
-        if option == "y":
+        option = input("Enter number to select option >> ")
+        if option == "1":
             print("\n-------Orders canceling-------")
-            Order_canceling.cancel_whole_order(sqlConnect, cursor, user_id)
-            showLandingPage(user_name)
+            print("\n-------Options-------")
+            print("`. Back")
+            order_id = input("Enter character to select option or input order ID >> ")
+            if order_id != '`':
+                Order_canceling.cancel_user_single_order(sqlConnect, cursor, user_name, order_id)#user_name
+            # showLandingPage(user_name)
             continue
-        elif option == "n":
-            showLandingPage(user_name)
+        elif option == "2":
+            print("\n-------Order item(s) canceling-------")
+
+            while True:
+                print("\n-------Options-------")
+                print("`. Back")
+                order_id = input("Enter character to select option or input order ID to view content of order >> ")
+                if order_id == '`':
+                    continue
+
+                # Show order content
+                items_order = Order_canceling.get_items_of_order(sqlConnect, cursor, user_name, order_id)#user_name
+
+                if len(items_order) > 0:
+                    break
+                else:
+                    print("\nInvalid order ID, please try again.")
+            
+            print("\n-------Options-------")
+            print("`. Back")            
+            item_id = input("Enter character to select option or input item ID going to be removed >> ")
+            if order_id != '`':
+                Order_canceling.cancel_order_single_item(sqlConnect, cursor,user_name, order_id, item_id)#user_name
+
             continue
         elif option == "`":
             showLandingPage(user_name)

@@ -1,5 +1,72 @@
 import pymysql, random, globals
 
+# def showCart():
+#     while True:
+#         cartFileReadAndUpdate = open(
+#             globals.path_cartFile, "r+")
+#         cartFileLines = cartFileReadAndUpdate.readlines()
+#         cartFileLinesLength = len(cartFileLines)
+
+#         print("\n-----Cart-----")
+
+#         if cartFileLinesLength != 0:
+#             print('1. Order')
+#             print('-. Remove product')
+
+#         print('`. Back')
+#         print('0. Exit')
+
+#         if cartFileLinesLength == 0:
+#             print("No products found.")
+
+#         if cartFileLinesLength != 0:
+#             print("<>---ProductsInCart---<>")
+#             for i in range(cartFileLinesLength):
+#                 cart_item = cartFileLines[i].rstrip()
+#                 if ":" not in cart_item:
+#                     # original ver of cart file
+#                     # not use
+#                     pass
+#                 else:
+#                     # version 2 of cart file
+#                     splitted = cart_item.split(":")
+#                     item_id = splitted[0]
+#                     cart_item = splitted[1]
+#                     item_price = splitted[1]
+#                 print(f'<> {cart_item}')
+#             print(f"<>---TotalAmount >> {checkTotalAmountOfProductsInCart()}$")
+
+#         option = input("Your choice >> ")
+#         if option == "0":
+#             shutdown()
+#         elif option == "`":
+#             showLandingPage()
+#             return
+#         elif option == "1" and cartFileLinesLength != 0:
+#             showOrderPanel("cart")
+#             return
+#         elif option == "-" and cartFileLinesLength != 0:
+#             showRemoveProductPanel()
+#             return
+#         else:
+#             print("\n[!] You've entered invalid character.")
+
+def checkTotalAmountOfProductsInCart():
+    totalAmount = 0
+    cartFileRead = open(
+        globals.path_cartFile, "r")
+    cartFileLines = cartFileRead.readlines()
+    for line in cartFileLines:
+        line = line.rstrip()
+        # totalAmount += checkProductPrice(line)
+        try:
+            totalAmount += float(line.split(":")[2].replace("$",""))
+        except:
+            pass
+
+    return totalAmount
+
+
 def write_cart(item_ID, target_product):
     cartFileReadAndUpdate = open(
         globals.path_cartFile, "r+")
@@ -11,7 +78,6 @@ def write_cart(item_ID, target_product):
     cartFileReadAndUpdate.close()
  
     
-
 def load_cart(path_cartFile):
     cart_items = [x.strip() for x in open(globals.path_cartFile)] # read all lines in txt into list, e.g. P005:Kobayashi antipyretic patch:$20
 
