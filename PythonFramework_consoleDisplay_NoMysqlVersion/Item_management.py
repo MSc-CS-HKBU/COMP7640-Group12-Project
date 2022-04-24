@@ -1,47 +1,6 @@
 import pymysql
 from prettytable import DEFAULT, PrettyTable
 
-def showAddProductPanel(db, cursor, shop_name):
-    # print("\n----Products----")
-
-    # print("[1...] Enter product number to add it to the cart")
-    # print("`. Back")
-    # print("0. Exit")
-    # print("\nPlease enter item ID to add it to the cart")
-
-    # print("\n")
-    # get_items_in_a_shop(db, cursor, shop_name)
-
-    # while True:
-    #     for i in range(len(products)):
-    #         print(f'|{i + 1}| {products[i]["name"]} -> {products[i]["price"]}')
-
-    #     option = input("Your choice >> ")
-    #     if option == "`":
-    #         showProducts()
-    #         return
-    #     if option == "0":
-    #         shutdown()
-    #     if int(option) > 0 and int(option) <= len(products):
-    #         cartFileReadAndUpdate = open(
-    #             path_cartFile, "r+")
-    #         cartFileLines = cartFileReadAndUpdate.readlines()
-    #         target_product = products[int(option) - 1]
-    #         cartFileLines.insert(
-    #             0, f'{target_product["id"]}:{target_product["name"]}:{target_product["price"]}\n')
-    #         cartFileReadAndUpdate.seek(0)
-    #         cartFileReadAndUpdate.writelines(cartFileLines)
-    #         cartFileReadAndUpdate.close()
-
-    #         print("\n----------------------------------------")
-    #         print("SUCCESS")
-    #         print("Product added to the cart")
-    #         print("----------------------------------------\n")
-    #         showLandingPage()
-    #         return
-    #     else:
-    #         print("\n[!] You've entered wrong character")
-    pass
 
 # get all items in a shop
 def get_items_in_a_shop(db, cursor, shop_name):
